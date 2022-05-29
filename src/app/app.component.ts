@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { LordInHouse } from 'src/interfaces/lordinhouse.interface';
-import { FireStoreService } from 'src/services/firestore.services';
+
+import { LordInHouseService } from 'src/services/lordinhouse.service';
 
 @Component({
   selector: 'app-root',
@@ -9,25 +10,63 @@ import { FireStoreService } from 'src/services/firestore.services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  lordInHouseList : any[];
-  constructor(public firestoreService:FireStoreService) {}
+  lordInHouseList : any;
+  house : string;
+  lord : string;
+  trait : string;
+  idToEdit : string;
+  idToDelete : string;
+  constructor(public lordInHouseService:LordInHouseService) {}
   
   ngOnInit(): void {
-
-    this.get();
-    
+    this.idToDelete = 'r1oEl4bYFYehaUJoRUWZ';
+    // this.house = '1';
+    // this.lord = '1';
+    // this.trait = 'Independent -தன்னிச்சையான';
+    //this.Delete_LordInHouse(); 
   }
 
-  async get() {
-    const snapshot = await this.firestoreService.getLords();
-    this.updateLordCollection(snapshot);
+  read_All_LordInHouse(){
+    this.lordInHouseService.read_All_LordInHouse().subscribe(data => {
+      this.lordInHouseList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          isEdit: false,
+          house: e.payload.doc.data()['house'],
+          lord: e.payload.doc.data()['lord'],
+          trait: e.payload.doc.data()['trait'],
+        };
+      })
+      console.log(this.lordInHouseList);
+    });
   }
 
-  updateLordCollection(snapshot: QuerySnapshot<DocumentData>) {
-    this.lordInHouseList = [];
-    snapshot.docs.forEach((lordinhouse) => {
-      this.lordInHouseList.push({ ...lordinhouse.data() });
+  create_LordInHouse() {
+    let record = {};
+    record['house'] = this.house;
+    record['lord'] = this.lord;
+    record['trait'] = this.trait;
+    this.lordInHouseService.create_LordInHouse(record).then(resp => {
+      this.house = "";
+      this.lord = "";
+      this.trait = "";
+      //console.log(resp);
     })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  Update_LordInHouse() {
+    let record = {};
+    record['house'] = this.house;
+    record['lord'] = this.lord;
+    record['trait'] = this.trait;
+    this.lordInHouseService.update_LordInHouse(this.idToEdit, record);
+  }
+
+  Delete_LordInHouse() {
+    this.lordInHouseService.delete_LordInHouse(this.idToDelete);
   }
 
 }
