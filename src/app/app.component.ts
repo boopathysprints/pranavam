@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     // this.house = '1';
     // this.lord = '1';
     // this.trait = 'Independent -தன்னிச்சையான';
-    //this.Delete_LordInHouse(); 
+    this.read_All_LordInHouse(); 
   }
 
   read_All_LordInHouse(){
@@ -55,6 +55,13 @@ export class AppComponent implements OnInit {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  Edit_LordInHouse(record){
+    record.isEdit = true;
+    record.EditHouse = record.house;
+    record.EditLord = record.lord;
+    record.EditTrait = record.trait;
   }
 
   Update_LordInHouse() {
