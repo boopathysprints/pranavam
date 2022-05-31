@@ -10,10 +10,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { MainComponent } from './shared/main/main.component';
-import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
+
 import { MenuComponent } from './shared/menu/menu.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
 
 
 
@@ -21,10 +22,10 @@ import { FooterComponent } from './shared/footer/footer.component';
   declarations: [
     AppComponent,
     MainComponent,
-    LordinhouseComponent,
     MenuComponent,
+    FooterComponent,
     DashboardComponent,
-    FooterComponent
+    LordinhouseComponent
   ],
   imports: [
     BrowserModule,
