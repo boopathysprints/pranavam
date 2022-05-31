@@ -1,37 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import { LordInHouseService } from 'src/services/lordinhouse.service';
-import { TableModule } from 'primeng/table';
+import {MessageService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-lordinhouse',
   templateUrl: './lordinhouse.component.html',
-  styleUrls: ['./lordinhouse.component.css']
+  styleUrls: ['./lordinhouse.component.css'],
+  providers: [MessageService]
 })
 export class LordinhouseComponent implements OnInit {
-  lordInHouseList : any;
-  house : string;
-  lord : string;
-  trait : string;
-  idToEdit : string;
-  idToDelete : string;
+  lordInHouseList: any;
+  house: string;
+  lord: string;
+  trait: string;
+  idToEditorDelete: string;
 
   selectedLordInHouse: any;
+  selecteForEditorDel: Boolean = false;
 
-  constructor(public lordInHouseService:LordInHouseService) { }
+  constructor(private lordInHouseService: LordInHouseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    //this.idToDelete = 'r1oEl4bYFYehaUJoRUWZ';
-    // this.house = '1';
-    // this.lord = '1';
-    // this.trait = 'Independent -தன்னிச்சையான';
-    this.read_All_LordInHouse(); 
+    this.read_All_LordInHouse();
   }
 
   onRowSelect(event) {
-   console.log(this.selectedLordInHouse);
-}
+    this.idToEditorDelete = this.selectedLordInHouse.id;
+    this.house = this.selectedLordInHouse.house;
+    this.lord = this.selectedLordInHouse.lord;
+    this.trait = this.selectedLordInHouse.trait;
+    this.selecteForEditorDel = true;
+  }
 
-  read_All_LordInHouse(){
+  cancel_LordInHouse(){
+    this.selectedLordInHouse = null;
+    this.house = '';
+    this.lord = '';
+    this.trait = '';
+    this.selecteForEditorDel = false;
+  }
+
+  read_All_LordInHouse() {
     this.lordInHouseService.read_All_LordInHouse().subscribe(data => {
       this.lordInHouseList = data.map(e => {
         return {
@@ -51,21 +61,12 @@ export class LordinhouseComponent implements OnInit {
     record['lord'] = this.lord;
     record['trait'] = this.trait;
     this.lordInHouseService.create_LordInHouse(record).then(resp => {
-      this.house = "";
-      this.lord = "";
-      this.trait = "";
-      //console.log(resp);
+      this.messageService.add({severity:'success', closable:false, summary:'Lord-in-house added', detail: "Lord-in-house added to database"});
+      this.cancel_LordInHouse();
     })
       .catch(error => {
-        console.log(error);
+        this.messageService.add({severity:'error', closable:false, summary:'some error occured', detail: error});
       });
-  }
-
-  Edit_LordInHouse(record){
-    record.isEdit = true;
-    record.EditHouse = record.house;
-    record.EditLord = record.lord;
-    record.EditTrait = record.trait;
   }
 
   Update_LordInHouse() {
@@ -73,11 +74,16 @@ export class LordinhouseComponent implements OnInit {
     record['house'] = this.house;
     record['lord'] = this.lord;
     record['trait'] = this.trait;
-    this.lordInHouseService.update_LordInHouse(this.idToEdit, record);
+    this.lordInHouseService.update_LordInHouse(this.idToEditorDelete, record);
+   
+    this.messageService.add({severity:'success', closable:false, summary:'Lord-in-house updated', detail: this.selectedLordInHouse.id + " is updated"});
+    this. cancel_LordInHouse();
   }
 
   Delete_LordInHouse() {
-    this.lordInHouseService.delete_LordInHouse(this.idToDelete);
+    this.lordInHouseService.delete_LordInHouse(this.idToEditorDelete);
+    this.messageService.add({severity:'success', closable:false, summary:'Lord-in-house deleted', detail: this.selectedLordInHouse.id + " is deleted"});
+    this. cancel_LordInHouse();
   }
 
 }
