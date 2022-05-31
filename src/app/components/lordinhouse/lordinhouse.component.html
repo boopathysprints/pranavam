@@ -2,20 +2,18 @@
 <div class="container">
 
     <div class="row" style="margin-top: 25px;">
-      <div class="col-md-3">
-        <input type="text" class="form-control" [(ngModel)]="house" placeholder="House">
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="house" placeholder="House">
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="lord" placeholder="Lord">
+        </div>
+        
+        <div class="col-md-3">
+          <button type="button" (click)="create_LordInHouse()" [disabled]="!house || !lord " class="btn btn-primary">
+            Search</button>
+        </div>
       </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" [(ngModel)]="lord" placeholder="Lord">
-      </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" [(ngModel)]="trait" placeholder="Trait">
-      </div>
-      <div class="col-md-3">
-        <button type="button" (click)="create_LordInHouse()" [disabled]="!house || !lord || !trait" class="btn btn-primary">+
-          Create LordInHouse</button>
-      </div>
-    </div>
     <div class="row" style="margin-top: 25px;">
       <div class="col-md-3">
         <div class="card" style="width: 18rem;" *ngFor="let item of lordInHouseList">
@@ -51,6 +49,22 @@
         </div>
       </div>
     </div>
+
+    <div class="row" style="margin-top: 25px;">
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="house" placeholder="House">
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="lord" placeholder="Lord">
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="trait" placeholder="Trait">
+        </div>
+        <div class="col-md-3">
+          <button type="button" (click)="create_LordInHouse()" [disabled]="!house || !lord || !trait" class="btn btn-primary">+
+            Create LordInHouse</button>
+        </div>
+      </div>
   
   
   </div>

@@ -9,17 +9,25 @@
           Pages
         </li>
 
-        <li class="sidebar-item active">
+        <li class="sidebar-item" [ngClass]="{'active': selectedItem == item.name}" (click)="listClick($event, item)" *ngFor="let item of menuItems">
+          <a class="sidebar-link" [routerLink]="item.link" routerLinkActive="active">
+            <i class="align-middle" [attr.data-feather]="item.icon"></i> <span class="align-middle">{{item.name}}</span>
+          </a>
+        </li>
+
+       
+
+        <!-- <li class="sidebar-item active">
           <a class="sidebar-link" routerLink='' routerLinkActive="active">
             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
           </a>
         </li>
 
-        <li class="sidebar-item">
+        <li class="sidebar-item active">
           <a class="sidebar-link" [routerLink]="['/pranavam/lordinhouse']"  routerLinkActive="active">
             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Lord In House</span>
           </a>
-        </li>
+        </li> -->
 
         <!-- <li class="sidebar-item">
           <a class="sidebar-link" href="pages-sign-in.html">
