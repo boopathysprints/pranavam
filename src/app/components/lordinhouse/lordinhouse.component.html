@@ -41,7 +41,9 @@
     [rows]="5" [value]="lordInHouseList" selectionMode="single"
       [globalFilterFields]="['house','lord','trait']" (onRowSelect)="onRowSelect($event)"
       [(selection)]="selectedLordInHouse" dataKey="id" responsiveLayout="scroll">
-      <ng-template pTemplate="caption">
+
+      <!-- Global search -->
+      <!-- <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
@@ -49,14 +51,19 @@
               (input)="lordinhouseTable.filterGlobal(textInput.value, 'contains')" placeholder="Search keyword" />
           </span>
         </div>
-      </ng-template>
+      </ng-template> -->
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns">
             {{col.header}}
           </th>
         </tr>
-        
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <input #colInput pInputText type="text"
+              (input)="lordinhouseTable.filter(colInput.value, col.field, 'contains')" />
+          </th>
+        </tr>
       </ng-template>
       <ng-template pTemplate="body" let-lordInHouse>
         <tr [pSelectableRow]="lordInHouse">
