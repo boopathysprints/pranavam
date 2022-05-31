@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentData, QuerySnapshot } from 'firebase/firestore';
-import { LordInHouse } from 'src/interfaces/lordinhouse.interface';
 
-import { LordInHouseService } from 'src/services/lordinhouse.service';
 
 @Component({
   selector: 'app-root',

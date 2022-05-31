@@ -9,11 +9,22 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
+import { MainComponent } from './shared/main/main.component';
+import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
+import { MenuComponent } from './shared/menu/menu.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FooterComponent } from './shared/footer/footer.component';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent,
+    LordinhouseComponent,
+    MenuComponent,
+    DashboardComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
