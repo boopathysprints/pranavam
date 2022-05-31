@@ -16,6 +16,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
 
+//primeng
+
+import {TableModule} from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
+import {ButtonModule} from 'primeng/button';
+
 
 
 @NgModule({
@@ -34,6 +40,9 @@ import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.compo
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    TableModule,
+    ButtonModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

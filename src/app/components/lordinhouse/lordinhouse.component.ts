@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { LordInHouseService } from 'src/services/lordinhouse.service';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-lordinhouse',
@@ -15,6 +15,8 @@ export class LordinhouseComponent implements OnInit {
   idToEdit : string;
   idToDelete : string;
 
+  selectedLordInHouse: any;
+
   constructor(public lordInHouseService:LordInHouseService) { }
 
   ngOnInit(): void {
@@ -24,6 +26,10 @@ export class LordinhouseComponent implements OnInit {
     // this.trait = 'Independent -தன்னிச்சையான';
     this.read_All_LordInHouse(); 
   }
+
+  onRowSelect(event) {
+   console.log(this.selectedLordInHouse);
+}
 
   read_All_LordInHouse(){
     this.lordInHouseService.read_All_LordInHouse().subscribe(data => {
@@ -36,7 +42,6 @@ export class LordinhouseComponent implements OnInit {
           trait: e.payload.doc.data()['trait'],
         };
       })
-      console.log(this.lordInHouseList);
     });
   }
 

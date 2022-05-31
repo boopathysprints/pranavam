@@ -14,7 +14,27 @@
             Search</button>
         </div>
       </div>
-    <div class="row" style="margin-top: 25px;">
+
+      <div class="card" style="margin-top: 25px;">
+          <p-table [value]="lordInHouseList" selectionMode="single" (onRowSelect)="onRowSelect($event)" [(selection)]="selectedLordInHouse" dataKey="id" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>House</th>
+                      <th>Lord</th>
+                      <th>Trait</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-lordInHouse>
+                  <tr [pSelectableRow]="lordInHouse">
+                      <td>{{lordInHouse.house}}</td>
+                      <td>{{lordInHouse.lord}}</td>
+                      <td>{{lordInHouse.trait}}</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+
+    <!-- <div class="row" style="margin-top: 25px;">
       <div class="col-md-3">
         <div class="card" style="width: 18rem;" *ngFor="let item of lordInHouseList">
           <div class="card-body" *ngIf="!item.isEdit; else elseBlock">
@@ -48,7 +68,7 @@
           </ng-template>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row" style="margin-top: 25px;">
         <div class="col-md-3">
