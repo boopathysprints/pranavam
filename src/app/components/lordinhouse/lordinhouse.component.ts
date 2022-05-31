@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LordInHouseService } from 'src/services/lordinhouse.service';
 import {MessageService} from 'primeng/api';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -10,18 +11,25 @@ import {MessageService} from 'primeng/api';
   providers: [MessageService]
 })
 export class LordinhouseComponent implements OnInit {
+  cols: any[];
   lordInHouseList: any;
   house: string;
   lord: string;
   trait: string;
   idToEditorDelete: string;
-
   selectedLordInHouse: any;
   selecteForEditorDel: Boolean = false;
+
+  @ViewChild('lordinhouseTable') lordinhouseTable: Table | undefined;
 
   constructor(private lordInHouseService: LordInHouseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.cols = [
+      { field: 'house', header: 'House' },
+      {field: 'lord', header: 'Lord' },
+      { field: 'trait', header: 'Trait' }      
+  ];
     this.read_All_LordInHouse();
   }
 
@@ -32,6 +40,7 @@ export class LordinhouseComponent implements OnInit {
     this.trait = this.selectedLordInHouse.trait;
     this.selecteForEditorDel = true;
   }
+
 
   cancel_LordInHouse(){
     this.selectedLordInHouse = null;
@@ -85,5 +94,4 @@ export class LordinhouseComponent implements OnInit {
     this.messageService.add({severity:'success', closable:false, summary:'Lord-in-house deleted', detail: this.selectedLordInHouse.id + " is deleted"});
     this. cancel_LordInHouse();
   }
-
 }
