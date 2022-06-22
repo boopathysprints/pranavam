@@ -16,12 +16,20 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
+import { HouseComponent } from './components/house/house.component';
+import { PlanetComponent } from './components/planet/planet.component';
+import { StarComponent } from './components/star/star.component';
+import { PlanetaslordComponent } from './components/planetaslord/planetaslord.component';
+import { PlanetinhouseComponent } from './components/planetinhouse/planetinhouse.component';
 
 //primeng
 
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {ButtonModule} from 'primeng/button';
+import { ChipModule } from 'primeng/chip';
+
+
 
 
 
@@ -34,7 +42,12 @@ import {ButtonModule} from 'primeng/button';
     MenuComponent,
     FooterComponent,
     DashboardComponent,
-    LordinhouseComponent
+    LordinhouseComponent,
+    HouseComponent,
+    PlanetComponent,
+    StarComponent,
+    PlanetaslordComponent,
+    PlanetinhouseComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +59,8 @@ import {ButtonModule} from 'primeng/button';
     AngularFireDatabaseModule,
     TableModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    ChipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
