@@ -1,0 +1,6 @@
+.tile {
+    height: 200px !important; 
+    max-height: 200px;
+    min-height: 200px!important;
+    overflow:scroll;
+}

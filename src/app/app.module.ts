@@ -28,6 +28,7 @@ import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {ButtonModule} from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
+import { SigninComponent } from './shared/signin/signin.component';
 
 
 
@@ -47,7 +48,8 @@ import { ChipModule } from 'primeng/chip';
     PlanetComponent,
     StarComponent,
     PlanetaslordComponent,
-    PlanetinhouseComponent
+    PlanetinhouseComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
