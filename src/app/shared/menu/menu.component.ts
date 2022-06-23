@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/interfaces/menuitem.interface';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,17 +9,20 @@ import { MenuItem } from 'src/interfaces/menuitem.interface';
 })
 export class MenuComponent implements OnInit {
 
-  menuItems: MenuItem[] = [{ name: "Dashboard", icon: "sliders", link: "" },
-                          { name: "Lord In House", icon: "user", link: "/pranavam/lordinhouse" }];
+  menuItems: MenuItem[] = [{ name: "Dashboard", icon: "sliders", link: "dashboard" },
+                          { name: "Star", icon: "activity", link: "star" },
+                        ];
   selectedItem: string = "Dashboard";
-
-  constructor() {}
-
+  
+  canShow:boolean = false;
+  
+  constructor(private _authService: AuthenticationService) {
+    this._authService.isAuthExpose.subscribe(status => this.canShow = status);
+  }
   ngOnInit(): void {
   }
 
   listClick(event, newValue) {
-    console.log(newValue);
     this.selectedItem = newValue.name;
   }
 

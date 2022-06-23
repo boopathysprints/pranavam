@@ -21,6 +21,9 @@ import { PlanetComponent } from './components/planet/planet.component';
 import { StarComponent } from './components/star/star.component';
 import { PlanetaslordComponent } from './components/planetaslord/planetaslord.component';
 import { PlanetinhouseComponent } from './components/planetinhouse/planetinhouse.component';
+import { SignComponent } from './components/sign/sign.component';
+import { SigninComponent } from './shared/signin/signin.component';
+import { TopbarComponent } from './shared/topbar/topbar.component';
 
 //primeng
 
@@ -28,12 +31,10 @@ import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {ButtonModule} from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
-import { SigninComponent } from './shared/signin/signin.component';
-
-
-
-
-
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {DropdownModule} from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AuthGuard } from 'src/services/auth.guard';
 
 
 @NgModule({
@@ -49,7 +50,9 @@ import { SigninComponent } from './shared/signin/signin.component';
     StarComponent,
     PlanetaslordComponent,
     PlanetinhouseComponent,
-    SigninComponent
+    SigninComponent,
+    TopbarComponent,
+    SignComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +65,12 @@ import { SigninComponent } from './shared/signin/signin.component';
     TableModule,
     ButtonModule,
     ToastModule,
-    ChipModule
+    ChipModule,
+    InputTextareaModule,
+    DropdownModule,
+    ConfirmDialogModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

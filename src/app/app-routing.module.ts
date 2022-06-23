@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/services/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
+import { StarComponent } from './components/star/star.component';
 import { MainComponent } from './shared/main/main.component';
+import { SigninComponent } from './shared/signin/signin.component';
 
 const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forRoot([
-    {path: '', component: DashboardComponent},
-    {path: 'pranavam/lordinhouse', component: LordinhouseComponent},
+    {path: 'pranavam', component: MainComponent, canActivate : [AuthGuard], 
+    children:[
+      {path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard]},
+      {path: 'star', component: StarComponent, canActivate : [AuthGuard]},
+     
+    ]},
+    {path: '', component: SigninComponent},
+    {path: 'login', component: SigninComponent},
     {path: '**', redirectTo: 'pages/notfound'},
 ])],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

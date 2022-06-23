@@ -1,0 +1,21 @@
+::ng-deep .p-inputtext {
+    margin-top: 0px;
+}
+
+::ng-deep .p-dropdown {
+    margin-top: 20px;
+    width: 200px !important;
+    height: 40px;
+    padding: 0;
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 14rem;
+  }
+  :host ::ng-deep .p-hidden-accessible {
+    display: none;
+  }
+
+textarea {
+    height: 99px;
+}

@@ -1,1 +1,81 @@
-<p>star works!</p>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-4">
+        <p-dropdown [options]="allStars" [(ngModel)]="star" optionValue="value" optionLabel="name"></p-dropdown>
+      </div>
+      <div class="col-md-4">
+        <p-dropdown [options]="allValues" [(ngModel)]="type" optionValue="value" optionLabel="name"></p-dropdown>
+      </div>
+      <div *ngIf="selecteForEditorDel" class="col-md-3">
+        <input type="text" class="form-control" [(ngModel)]="value" placeholder="value">
+      </div>
+      <div *ngIf="!selecteForEditorDel" class="col-md-4">
+        <textarea pInputTextarea [(ngModel)]="csvalues"></textarea>
+      </div>
+    </div>
+  
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-3" *ngIf="!selecteForEditorDel">
+        <button type="button" (click)="create_Star()" [disabled]="!star || !type || !csvalues"
+          class="btn btn-primary">+
+          Create</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="Update_Star()" [disabled]="!star || !type || !value"
+          class="btn btn-primary">
+          Update</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="confirmDelete()" [disabled]="!star || !type || !value"
+          class="btn btn-primary">
+          Delete</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="cancel_Star()" [disabled]="!star || !type || !value"
+          class="btn btn-primary">
+          Cancel</button>
+      </div>
+    </div>
+  
+    <div class="card" style="margin-top: 25px;">
+      <p-table #StarTable [columns]="cols" [paginator]="true" 
+      [rows]="5" [value]="StarList" selectionMode="single"
+        [globalFilterFields]="['star','type','value']" (onRowSelect)="onRowSelect($event)"
+        [(selection)]="selectedStar" dataKey="id" responsiveLayout="scroll">
+  
+        <!-- Global search -->
+        <!-- <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input #textInput pInputText type="text"
+                (input)="typeinstarTable.filterGlobal(textInput.value, 'contains')" placeholder="Search keyword" />
+            </span>
+          </div>
+        </ng-template> -->
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input #colInput pInputText type="text"
+                (input)="StarTable.filter(colInput.value, col.field, 'contains')" />
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Star>
+          <tr [pSelectableRow]="Star">
+            <td>{{Star.star}}</td>
+            <td>{{Star.type}}</td>
+            <td>{{Star.value}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
