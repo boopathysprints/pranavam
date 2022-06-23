@@ -1,5 +1,6 @@
 ::ng-deep .p-inputtext {
-    margin-top: 0px;
+    width: 200px !important;
+    min-height: 40px !important;
 }
 
 ::ng-deep .p-dropdown {

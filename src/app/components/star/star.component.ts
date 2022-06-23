@@ -14,7 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 export class StarComponent implements OnInit {
 
   cols: any[];
-  StarList: any;
+  starList: any;
   star: string;
   type: string;
   value: string;
@@ -64,7 +64,7 @@ export class StarComponent implements OnInit {
 
   read_All_Star() {
     this.starService.read_All_Stars().subscribe(data => {
-      this.StarList = data.map(e => {
+      this.starList = data.map(e => {
         return {
           id: e.payload.doc.id,
           isEdit: false,

@@ -1,1 +1,70 @@
-<p>sign works!</p>
+<div class="container">
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-4">
+        <p-dropdown [options]="allSigns" [(ngModel)]="sign" optionValue="value" optionLabel="name"></p-dropdown>
+      </div>
+      <div class="col-md-4">
+        <p-dropdown [options]="allValues" [(ngModel)]="type" optionValue="value" optionLabel="name"></p-dropdown>
+      </div>
+      <div *ngIf="selecteForEditorDel" class="col-md-3">
+        <input type="text" pInputText class="top20" [(ngModel)]="value" placeholder="value">
+      </div>
+      <div *ngIf="!selecteForEditorDel" class="col-md-4">
+        <textarea pInputTextarea [(ngModel)]="csvalues"></textarea>
+      </div>
+    </div>
+  
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-3" *ngIf="!selecteForEditorDel">
+        <button type="button" (click)="create_Sign()" [disabled]="!sign || !type || !csvalues"
+          class="btn btn-primary">+
+          Create</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="Update_Sign()" [disabled]="!sign || !type || !value"
+          class="btn btn-primary">
+          Update</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="confirmDelete()" [disabled]="!sign || !type || !value"
+          class="btn btn-primary">
+          Delete</button>
+      </div>
+      <div class="col-md-3" *ngIf="selecteForEditorDel">
+        <button type="button" (click)="cancel_Sign()" [disabled]="!sign || !type || !value"
+          class="btn btn-primary">
+          Cancel</button>
+      </div>
+    </div>
+  
+    <div class="card" style="margin-top: 25px;">
+      <p-table #SignTable [columns]="cols" [paginator]="true" 
+      [rows]="5" [value]="signList" selectionMode="single"
+        [globalFilterFields]="['Sign','type','value']" (onRowSelect)="onRowSelect($event)"
+        [(selection)]="selectedSign" dataKey="id" responsiveLayout="scroll">
+  
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input #colInput pInputText type="text"
+                (input)="SignTable.filter(colInput.value, col.field, 'contains')" />
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Sign>
+          <tr [pSelectableRow]="Sign">
+            <td>{{Sign.Sign}}</td>
+            <td>{{Sign.type}}</td>
+            <td>{{Sign.value}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>

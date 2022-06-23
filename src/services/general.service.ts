@@ -19,12 +19,38 @@ export class GeneralService {
   }
 
   get_All_Stars(){
-    var allstars = [
+    var allStars = [
       { name: 'ASWINI', value: 'aswini' },
       { name: 'MAGAM', value: 'magam' },
       { name: 'MOOLAM', value: 'moolam' },
     ];
-   
-    return allstars;
+    return allStars;
+  }
+
+  get_All_Signs(){
+    var allSigns = [
+      { name: 'ASWINI', value: 'aswini' },
+      { name: 'MAGAM', value: 'magam' },
+      { name: 'MOOLAM', value: 'moolam' },
+    ];
+    return allSigns;
+  }
+
+  get_All_Planets(){
+    var allPlanets = [
+      { name: 'ASWINI', value: 'aswini' },
+      { name: 'MAGAM', value: 'magam' },
+      { name: 'MOOLAM', value: 'moolam' },
+    ];
+    return allPlanets;
+  }
+
+  get_All_Houses(){
+    var allHouses = [
+      { name: 'ASWINI', value: 'aswini' },
+      { name: 'MAGAM', value: 'magam' },
+      { name: 'MOOLAM', value: 'moolam' },
+    ];
+    return allHouses;
   }
 }

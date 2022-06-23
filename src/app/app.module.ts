@@ -32,6 +32,7 @@ import {ToastModule} from 'primeng/toast';
 import {ButtonModule} from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AuthGuard } from 'src/services/auth.guard';
@@ -69,6 +70,7 @@ import { AuthGuard } from 'src/services/auth.guard';
     InputTextareaModule,
     DropdownModule,
     ConfirmDialogModule,
+    InputTextModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
