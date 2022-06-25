@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/services/general.service';
 import { SignService } from 'src/services/sign.service';
-import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-sign',
   templateUrl: './sign.component.html',
-  styleUrls: ['./sign.component.css']
+  styleUrls: ['./sign.component.css'],
+  providers:[MessageService]
 })
 export class SignComponent implements OnInit {
 
@@ -23,6 +24,7 @@ export class SignComponent implements OnInit {
   selecteForEditorDel: Boolean = false;
   allSigns: any;
   allValues: any;
+  filteredValues: any;
 
   @ViewChild('SignTable') SignTable: Table | undefined;
 
@@ -37,7 +39,7 @@ export class SignComponent implements OnInit {
 
     this.read_All_Sign();
     this.allSigns = this.generalService.get_All_Signs();
-    this.allValues = this.generalService.get_All_Values();
+    this.allValues = this.generalService.get_All_Sign_Values();
   }
 
   onRowSelect(event) {
@@ -48,13 +50,26 @@ export class SignComponent implements OnInit {
     this.selecteForEditorDel = true;
   }
 
-
   cancel_Sign() {
     this.selectedSign = null;
     this.sign = '';
     this.type = '';
     this.value = '';
+    this.csvalues = '';
     this.selecteForEditorDel = false;
+  }
+
+  filterValue(event) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.allValues.length; i++) {
+      let value = this.allValues[i];
+      if (value.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(value);
+      }
+    }
+    this.filteredValues = filtered;
   }
 
   get_All_Signs() {
@@ -95,7 +110,12 @@ export class SignComponent implements OnInit {
   create_Sign() {
     let record = {};
     record['Sign'] = this.sign;
-    record['type'] = this.type;
+    if(this.type['value']){
+      record['type'] = this.type['value'];
+    } else{
+      record['type'] = this.type
+    }
+    
     var valuesArray = this.csvalues.split(',');
     for (var i = 0; i < valuesArray.length; i++) {
       record['value'] = valuesArray[i];
@@ -113,7 +133,11 @@ export class SignComponent implements OnInit {
   Update_Sign() {
     let record = {};
     record['Sign'] = this.sign;
-    record['type'] = this.type;
+    if(this.type['value']){
+      record['type'] = this.type['value'];
+    } else{
+      record['type'] = this.type
+    }
     record['value'] = this.value;
     this.signService.update_Sign(this.idToEditorDelete, record);
 

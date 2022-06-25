@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { AuthGuard } from 'src/services/auth.guard';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -24,6 +26,10 @@ import { PlanetinhouseComponent } from './components/planetinhouse/planetinhouse
 import { SignComponent } from './components/sign/sign.component';
 import { SigninComponent } from './shared/signin/signin.component';
 import { TopbarComponent } from './shared/topbar/topbar.component';
+import { PlanetinsignComponent } from './components/planetinsign/planetinsign.component';
+import { PlanetinstarComponent } from './components/planetinstar/planetinstar.component';
+
+import { LorninsignComponent } from './components/lorninsign/lorninsign.component';
 
 //primeng
 
@@ -35,7 +41,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { AuthGuard } from 'src/services/auth.guard';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -53,11 +61,15 @@ import { AuthGuard } from 'src/services/auth.guard';
     PlanetinhouseComponent,
     SigninComponent,
     TopbarComponent,
-    SignComponent
+    SignComponent,
+    PlanetinsignComponent,
+    PlanetinstarComponent,
+    LorninsignComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -70,9 +82,10 @@ import { AuthGuard } from 'src/services/auth.guard';
     InputTextareaModule,
     DropdownModule,
     ConfirmDialogModule,
-    InputTextModule
+    InputTextModule,
+    AutoCompleteModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

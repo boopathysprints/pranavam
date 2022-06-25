@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/services/general.service';
 import { HouseService } from 'src/services/house.service';
-import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-house',
   templateUrl: './house.component.html',
-  styleUrls: ['./house.component.css']
+  styleUrls: ['./house.component.css'],
+  providers:[ConfirmationService,MessageService]
 })
 export class HouseComponent implements OnInit {
 
@@ -23,10 +23,11 @@ export class HouseComponent implements OnInit {
   selecteForEditorDel: Boolean = false;
   allHouses: any;
   allValues: any;
+  filteredValues: any;
 
   @ViewChild('HouseTable') HouseTable: Table | undefined;
 
-  constructor(private houseService: HouseService, private confirmationService: ConfirmationService, private messageService: MessageService, private generalService: GeneralService) { }
+  constructor(private houseService: HouseService, private confirmationService: ConfirmationService , private messageService: MessageService, private generalService: GeneralService) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -108,6 +109,20 @@ export class HouseComponent implements OnInit {
     }
     this.messageService.add({ severity: 'success', closable: false, summary: 'House added', detail: "House added to database" });
     this.cancel_House();
+  }
+
+  filterValue(event) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.allValues.length; i++) {
+      let value = this.allValues[i];
+      if (value.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(value);
+      }
+    }
+
+    this.filteredValues = filtered;
   }
 
   Update_House() {

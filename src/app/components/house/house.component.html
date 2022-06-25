@@ -6,7 +6,9 @@
         <p-dropdown [options]="allHouses" [(ngModel)]="house" optionValue="value" optionLabel="name"></p-dropdown>
       </div>
       <div class="col-md-4">
-        <p-dropdown [options]="allValues" [(ngModel)]="type" optionValue="value" optionLabel="name"></p-dropdown>
+        <p-autoComplete [(ngModel)]="type" [suggestions]="filteredValues" (completeMethod)="filterValue($event)"
+          field="value" [minLength]="1"></p-autoComplete>
+        <!-- <p-dropdown [options]="allValues" [(ngModel)]="type" optionValue="value" optionLabel="name"></p-dropdown> -->
       </div>
       <div *ngIf="selecteForEditorDel" class="col-md-3">
         <input type="text" pInputText class="top20" [(ngModel)]="value" placeholder="value">

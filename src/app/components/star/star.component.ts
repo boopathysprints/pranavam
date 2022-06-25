@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/services/general.service';
 import { StarService } from 'src/services/star.service';
-import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-star',
   templateUrl: './star.component.html',
   styleUrls: ['./star.component.css'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService]
 })
 export class StarComponent implements OnInit {
 
@@ -24,6 +23,7 @@ export class StarComponent implements OnInit {
   selecteForEditorDel: Boolean = false;
   allStars: any;
   allValues: any;
+  filteredValues: any;
 
   @ViewChild('StarTable') StarTable: Table | undefined;
 
@@ -49,6 +49,18 @@ export class StarComponent implements OnInit {
     this.selecteForEditorDel = true;
   }
 
+  filterValue(event) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.allValues.length; i++) {
+      let value = this.allValues[i];
+      if (value.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(value);
+      }
+    }
+    this.filteredValues = filtered;
+  }
 
   cancel_Star() {
     this.selectedStar = null;
@@ -96,7 +108,11 @@ export class StarComponent implements OnInit {
   create_Star() {
     let record = {};
     record['star'] = this.star;
-    record['type'] = this.type;
+     if(this.type['value']){
+      record['type'] = this.type['value'];
+    } else{
+      record['type'] = this.type
+    }
     var valuesArray = this.csvalues.split(',');
     for (var i = 0; i < valuesArray.length; i++) {
       record['value'] = valuesArray[i];
@@ -114,7 +130,11 @@ export class StarComponent implements OnInit {
   Update_Star() {
     let record = {};
     record['star'] = this.star;
-    record['type'] = this.type;
+    if(this.type['value']){
+      record['type'] = this.type['value'];
+    } else{
+      record['type'] = this.type
+    }
     record['value'] = this.value;
     this.starService.update_Star(this.idToEditorDelete, record);
 

@@ -10,9 +10,13 @@
     padding: 0;
 }
 
-:host ::ng-deep .p-dropdown {
-    width: 14rem;
-  }
+::ng-deep .p-autocomplete {
+  margin-top: 20px;
+  width: 200px !important;
+  height: 40px;
+  padding: 0;
+}
+
   :host ::ng-deep .p-hidden-accessible {
     display: none;
   }
