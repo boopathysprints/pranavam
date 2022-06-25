@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralService {
 
-  constructor() { }
+  starTypeData ='./assets/csv/starTypeData.csv';
+  constructor(private http: HttpClient) { }
+
+  getStarTypeInfo() {
+    return this.http.get(this.starTypeData, {responseType: 'text'});
+    }
 
   get_All_Values() {
     var allValues = [
@@ -40,36 +46,7 @@ export class GeneralService {
     return allValues;
   }
 
-  get_All_Stars() {
-    var allStars = [
-      { name: 'ASWINI', value: 'aswini' },
-      { name: 'MAGAM', value: 'magam' },
-      { name: 'MOOLAM', value: 'moolam' },
-    ];
-    return allStars;
-  }
-
-  get_All_Star_Values() {
-    var allValues = [
-      { name: 'அதிபதி', value: 'அதிபதி' },
-      { name: 'உருவம்', value: 'உருவம்' },
-      { name: 'இயல்பு', value: 'இயல்பு' },
-      { name: 'பஞ்சபூதம்', value: 'பஞ்சபூதம்' },
-      { name: 'திசை', value: 'திசை' },
-      { name: 'உறுப்பு', value: 'உறுப்பு' },
-      { name: 'இடம்', value: 'இடம்' },
-      { name: 'நிறம்', value: 'நிறம்' },
-      { name: 'மனநிலை', value: 'மனநிலை' },
-      { name: 'பாலினம்', value: 'பாலினம்' },
-      { name: 'மாதம்', value: 'மாதம்' },
-      { name: 'உயரம்', value: 'உயரம்' },
-      { name: 'காலபுருஷனுக்கு', value: 'காலபுருஷனுக்கு' },
-      { name: 'பாதகாதிபதி', value: 'பாதகாதிபதி' },
-      { name: 'மற்றவை', value: 'மற்றவை'},
-    ];
-
-    return allValues;
-  }
+  
 
   get_All_Signs() {
     var allSigns = [

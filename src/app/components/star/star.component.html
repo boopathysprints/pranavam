@@ -1,4 +1,9 @@
 <div class="container">
+  <!-- <div *ngFor="let star of starData">
+
+    <p> {{ star }}</p>
+    
+    </div> -->
     <p-toast></p-toast>
     <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
     <div class="row" style="margin-top: 25px;">
@@ -17,6 +22,12 @@
     </div>
   
     <div class="row" style="margin-top: 25px;">
+      <!-- <div class="col-md-3" *ngIf="!selecteForEditorDel">
+        <button type="button" (click)="upload_Stars()"
+          class="btn btn-primary">+
+          Upload</button>
+      </div> -->
+
       <div class="col-md-3" *ngIf="!selecteForEditorDel">
         <button type="button" (click)="create_Star()" [disabled]="!star || !type || !csvalues"
           class="btn btn-primary">+

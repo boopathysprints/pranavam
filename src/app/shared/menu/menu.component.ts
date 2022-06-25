@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   menuItems: MenuItem[] = [{ name: "Dashboard", icon: "sliders", link: "dashboard" },
                           { name: "Sign", icon: "activity", link: "sign" },
                           { name: "House", icon: "activity", link: "house" },
+                          { name: "Star", icon: "activity", link: "star" },
                         ];
   selectedItem: string = "Dashboard";
   

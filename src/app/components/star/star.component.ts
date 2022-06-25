@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { empty } from 'rxjs';
+import { CsvreaderService } from 'src/services/csvreader.service';
 import { GeneralService } from 'src/services/general.service';
 import { StarService } from 'src/services/star.service';
 
@@ -13,6 +15,7 @@ import { StarService } from 'src/services/star.service';
 export class StarComponent implements OnInit {
 
   cols: any[];
+  starTypeData: any[]=[];
   starList: any;
   star: string;
   type: string;
@@ -21,8 +24,8 @@ export class StarComponent implements OnInit {
   idToEditorDelete: string;
   selectedStar: any;
   selecteForEditorDel: Boolean = false;
-  allStars: any;
-  allValues: any;
+  allStars: any[]=[];
+  allValues: any[]=[];
   filteredValues: any;
 
   @ViewChild('StarTable') StarTable: Table | undefined;
@@ -37,8 +40,27 @@ export class StarComponent implements OnInit {
     ];
 
     this.read_All_Star();
-    this.allStars = this.generalService.get_All_Stars();
-    this.allValues = this.generalService.get_All_Values();
+    this.get_Star_Type_Values();
+  }
+
+  get_Star_Type_Values(){
+    this.generalService.getStarTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.starTypeData.push(e);
+      });
+      console.log(this.starTypeData);
+    });
+    setTimeout(() => this.update_Star_Type_Values(), 3000);
+  }
+
+  update_Star_Type_Values(){
+    var starArray = this.starTypeData[0].split(',');
+    var typeArray = this.starTypeData[1].split(',');
+    starArray.forEach(star=> this.allStars.push({ name: star, value: star }));
+    typeArray.forEach(type=> {
+      if(type && type != '')
+      this.allValues.push({ name: type, value: type })});;
   }
 
   onRowSelect(event) {
@@ -68,10 +90,6 @@ export class StarComponent implements OnInit {
     this.type = '';
     this.value = '';
     this.selecteForEditorDel = false;
-  }
-
-  get_All_Stars() {
-
   }
 
   read_All_Star() {
@@ -105,6 +123,8 @@ export class StarComponent implements OnInit {
     });
   }
 
+  
+
   create_Star() {
     let record = {};
     record['star'] = this.star;
@@ -130,9 +150,9 @@ export class StarComponent implements OnInit {
   Update_Star() {
     let record = {};
     record['star'] = this.star;
-    if(this.type['value']){
+    if (this.type['value']) {
       record['type'] = this.type['value'];
-    } else{
+    } else {
       record['type'] = this.type
     }
     record['value'] = this.value;
@@ -144,9 +164,48 @@ export class StarComponent implements OnInit {
 
   Delete_Star() {
     this.starService.delete_Star(this.idToEditorDelete);
-    
+
     this.messageService.add({ severity: 'success', closable: false, summary: 'Star deleted', detail: this.selectedStar.id + " is deleted" });
     this.cancel_Star();
   }
+
+  /*
+
+  upload_Stars(){
+    this.csvService.getStarInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.starData.push(e);
+      });
+    });
+    setTimeout(() => this.uploadtoCloud(), 4000);
+  }
+
+  uploadtoCloud(){
+    let record = {};
+    var typesArray = this.starData[0].split(',');
+    console.log(typesArray);
+    for (var i = 1; i < this.starData.length; i++) { 
+      var starArray = this.starData[i].split(',');
+      record['star'] = starArray[0];
+      record['type'] = typesArray[i];
+      record['value'] = starArray[i];
+      //console.log(starArray);
+      for (var j = 1; j < starArray.length; j++) { 
+        record['star'] = starArray[0];
+        record['type'] = typesArray[j];
+        record['value'] = starArray[j];
+        //console.log(record['star'] + " " + record['type']+ " " + record['value']);
+        this.starService.create_Star(record).then(resp => {
+          console.log('success');
+        })
+        .catch(error => {
+          this.messageService.add({ severity: 'error', closable: false, summary: 'some error occured', detail: error });
+        });
+      }
+    }
+  }
+
+  */
 
 }
