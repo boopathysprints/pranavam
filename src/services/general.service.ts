@@ -46,8 +46,6 @@ export class GeneralService {
     return allValues;
   }
 
-  
-
   get_All_Signs() {
     var allSigns = [
       { name: 'மேஷம்', value: 'மேஷம்'},

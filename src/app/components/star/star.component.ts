@@ -49,7 +49,6 @@ export class StarComponent implements OnInit {
       list.forEach(e => {
         this.starTypeData.push(e);
       });
-      console.log(this.starTypeData);
     });
     setTimeout(() => this.update_Star_Type_Values(), 3000);
   }
@@ -89,6 +88,7 @@ export class StarComponent implements OnInit {
     this.star = '';
     this.type = '';
     this.value = '';
+    this.csvalues = '';
     this.selecteForEditorDel = false;
   }
 
