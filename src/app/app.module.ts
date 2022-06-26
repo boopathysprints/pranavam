@@ -44,6 +44,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { UploadbulkComponent } from './uploadbulk/uploadbulk.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     SignComponent,
     PlanetinsignComponent,
     PlanetinstarComponent,
-    LorninsignComponent
+    LorninsignComponent,
+    UploadbulkComponent
   ],
   imports: [
     BrowserModule,

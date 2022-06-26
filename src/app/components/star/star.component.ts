@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { empty } from 'rxjs';
-import { CsvreaderService } from 'src/services/csvreader.service';
 import { GeneralService } from 'src/services/general.service';
 import { StarService } from 'src/services/star.service';
 
@@ -171,40 +169,7 @@ export class StarComponent implements OnInit {
 
   /*
 
-  upload_Stars(){
-    this.csvService.getStarInfo().subscribe(data => {
-      const list = data.split('\n');
-      list.forEach(e => {
-        this.starData.push(e);
-      });
-    });
-    setTimeout(() => this.uploadtoCloud(), 4000);
-  }
-
-  uploadtoCloud(){
-    let record = {};
-    var typesArray = this.starData[0].split(',');
-    console.log(typesArray);
-    for (var i = 1; i < this.starData.length; i++) { 
-      var starArray = this.starData[i].split(',');
-      record['star'] = starArray[0];
-      record['type'] = typesArray[i];
-      record['value'] = starArray[i];
-      //console.log(starArray);
-      for (var j = 1; j < starArray.length; j++) { 
-        record['star'] = starArray[0];
-        record['type'] = typesArray[j];
-        record['value'] = starArray[j];
-        //console.log(record['star'] + " " + record['type']+ " " + record['value']);
-        this.starService.create_Star(record).then(resp => {
-          console.log('success');
-        })
-        .catch(error => {
-          this.messageService.add({ severity: 'error', closable: false, summary: 'some error occured', detail: error });
-        });
-      }
-    }
-  }
+  
 
   */
 

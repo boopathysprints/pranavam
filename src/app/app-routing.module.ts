@@ -7,6 +7,7 @@ import { SignComponent } from './components/sign/sign.component';
 import { StarComponent } from './components/star/star.component';
 import { MainComponent } from './shared/main/main.component';
 import { SigninComponent } from './shared/signin/signin.component';
+import { UploadbulkComponent } from './uploadbulk/uploadbulk.component';
 
 const routes: Routes = [];
 
@@ -15,9 +16,10 @@ const routes: Routes = [];
     {path: 'pranavam', component: MainComponent, canActivate : [AuthGuard], 
     children:[
       {path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard]},
-      {path: 'sign', component: SignComponent, canActivate : [AuthGuard]},
-      {path: 'house', component: HouseComponent, canActivate : [AuthGuard]},
       {path: 'star', component: StarComponent, canActivate : [AuthGuard]},
+      {path: 'sign', component: SignComponent, canActivate : [AuthGuard]},
+      {path: 'upload', component: UploadbulkComponent, canActivate : [AuthGuard]},
+      
     ]},
     {path: '', component: SigninComponent},
     {path: 'login', component: SigninComponent},

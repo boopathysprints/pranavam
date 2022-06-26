@@ -6,8 +6,7 @@
         <p-dropdown [options]="allSigns" [(ngModel)]="sign" optionValue="value" optionLabel="name"></p-dropdown>
       </div>
       <div class="col-md-4">
-        <p-autoComplete [(ngModel)]="type" [suggestions]="filteredValues" (completeMethod)="filterValue($event)"
-        field="value" [minLength]="1"></p-autoComplete>
+        <p-dropdown [options]="allValues" [(ngModel)]="type" optionValue="value" optionLabel="name"></p-dropdown>
       </div>
       <div *ngIf="selecteForEditorDel" class="col-md-3">
         <input type="text" pInputText class="top20" [(ngModel)]="value" placeholder="value">
@@ -61,7 +60,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-Sign>
           <tr [pSelectableRow]="Sign">
-            <td>{{Sign.Sign}}</td>
+            <td>{{Sign.sign}}</td>
             <td>{{Sign.type}}</td>
             <td>{{Sign.value}}</td>
           </tr>

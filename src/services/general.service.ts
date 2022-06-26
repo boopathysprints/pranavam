@@ -7,11 +7,16 @@ import { HttpClient } from '@angular/common/http';
 export class GeneralService {
 
   starTypeData ='./assets/csv/starTypeData.csv';
+  signTypeData ='./assets/csv/signTypeData.csv';
   constructor(private http: HttpClient) { }
 
   getStarTypeInfo() {
     return this.http.get(this.starTypeData, {responseType: 'text'});
     }
+
+    getSignTypeInfo() {
+      return this.http.get(this.signTypeData, {responseType: 'text'});
+      }
 
   get_All_Values() {
     var allValues = [

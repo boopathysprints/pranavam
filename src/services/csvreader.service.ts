@@ -5,10 +5,10 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CsvreaderService {
-starData ='./assets/csv/starData.csv';
+starData ='./assets/csv/signData.csv';
   constructor(private http: HttpClient) { }
 
-  getStarInfo() {
+  getDataInfo() {
     return this.http.get(this.starData, {responseType: 'text'});
     }
 }

@@ -1,0 +1,48 @@
+<div class="container">
+    <!-- <div *ngFor="let entry of Data">
+  
+      <p> {{ entry }}</p>
+      
+      </div> -->
+      <p-toast></p-toast>
+      <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+
+    
+      <div class="row" style="margin-top: 25px;">
+        <div class="col-md-3">
+          <button type="button" (click)="upload_Bulk()"
+            class="btn btn-primary">+
+            Upload</button>
+        </div>
+  
+        
+      </div>
+    
+      <div class="card" style="margin-top: 25px;">
+        <p-table #StarTable [columns]="cols" [paginator]="true" 
+      [rows]="5" [value]="dataList" selectionMode="single"
+        [globalFilterFields]="['star','type','value']"  dataKey="id" responsiveLayout="scroll">
+  
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input #colInput pInputText type="text"
+                (input)="StarTable.filter(colInput.value, col.field, 'contains')" />
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Star>
+          <tr [pSelectableRow]="Star">
+            <td>{{Star.sign}}</td>
+            <td>{{Star.type}}</td>
+            <td>{{Star.value}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      </div>
+    </div>

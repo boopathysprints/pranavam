@@ -14,6 +14,7 @@ import { SignService } from 'src/services/sign.service';
 export class SignComponent implements OnInit {
 
   cols: any[];
+  signTypeData: any[]=[];
   signList: any;
   sign: string;
   type: string;
@@ -22,8 +23,8 @@ export class SignComponent implements OnInit {
   idToEditorDelete: string;
   selectedSign: any;
   selecteForEditorDel: Boolean = false;
-  allSigns: any;
-  allValues: any;
+  allSigns: any[]=[];
+  allValues: any[]=[];
   filteredValues: any;
 
   @ViewChild('SignTable') SignTable: Table | undefined;
@@ -32,14 +33,32 @@ export class SignComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'Sign', header: 'Sign' },
+      { field: 'sign', header: 'Sign' },
       { field: 'type', header: 'Type' },
       { field: 'value', header: 'Value' }
     ];
 
     this.read_All_Sign();
-    this.allSigns = this.generalService.get_All_Signs();
-    this.allValues = this.generalService.get_All_Sign_Values();
+    this.get_Sign_Type_Values();
+  }
+
+  get_Sign_Type_Values(){
+    this.generalService.getSignTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.signTypeData.push(e);
+      });
+    });
+    setTimeout(() => this.update_Sign_Type_Values(), 3000);
+  }
+
+  update_Sign_Type_Values(){
+    var signArray = this.signTypeData[0].split(',');
+    var typeArray = this.signTypeData[1].split(',');
+    signArray.forEach(sign=> this.allSigns.push({ name: sign, value: sign }));
+    typeArray.forEach(type=> {
+      if(type && type != '')
+      this.allValues.push({ name: type, value: type })});;
   }
 
   onRowSelect(event) {
@@ -82,7 +101,7 @@ export class SignComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           isEdit: false,
-          Sign: e.payload.doc.data()['Sign'],
+          sign: e.payload.doc.data()['sign'],
           type: e.payload.doc.data()['type'],
           value: e.payload.doc.data()['value'],
         };
@@ -96,7 +115,6 @@ export class SignComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        console.log(this.idToEditorDelete);
         this.Delete_Sign();
         //this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
       },
