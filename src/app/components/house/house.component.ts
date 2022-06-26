@@ -13,6 +13,10 @@ import { HouseService } from 'src/services/house.service';
 export class HouseComponent implements OnInit {
 
   cols: any[];
+  houseTypeData: any[]=[];
+  allHouses: any[]=[];
+  allValues: any[]=[];
+  
   houseList: any;
   house: string;
   type: string;
@@ -21,8 +25,7 @@ export class HouseComponent implements OnInit {
   idToEditorDelete: string;
   selectedHouse: any;
   selecteForEditorDel: Boolean = false;
-  allHouses: any;
-  allValues: any;
+  
   filteredValues: any;
 
   @ViewChild('HouseTable') HouseTable: Table | undefined;
@@ -37,8 +40,26 @@ export class HouseComponent implements OnInit {
     ];
 
     this.read_All_House();
-    this.allHouses = this.generalService.get_All_Houses();
-    this.allValues = this.generalService.get_All_Values();
+    this.get_House_Type_Values();
+  }
+
+  get_House_Type_Values(){
+    this.generalService.getHouseTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.houseTypeData.push(e);
+      });
+    });
+    setTimeout(() => this.update_House_Type_Values(), 3000);
+  }
+
+  update_House_Type_Values(){
+    var houseArray = this.houseTypeData[0].split(',');
+    var typeArray = this.houseTypeData[1].split(',');
+    houseArray.forEach(house=> this.allHouses.push({ name: house, value: house }));
+    typeArray.forEach(type=> {
+      if(type && type != '')
+      this.allValues.push({ name: type, value: type })});;
   }
 
   onRowSelect(event) {

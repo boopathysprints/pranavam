@@ -2,13 +2,13 @@
 <div class="container">
   <p-toast></p-toast>
   <div class="row" style="margin-top: 25px;">
-    <div class="col-md-3">
-      <input type="text" class="form-control" [(ngModel)]="house" placeholder="House">
+    <div class="col-md-4">
+      <p-dropdown [options]="allHouses" [(ngModel)]="lord" optionValue="value" optionLabel="name"></p-dropdown>
     </div>
-    <div class="col-md-3">
-      <input type="text" class="form-control" [(ngModel)]="lord" placeholder="Lord">
+    <div class="col-md-4">
+      <p-dropdown [options]="allHouses" [(ngModel)]="house" optionValue="value" optionLabel="name"></p-dropdown>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <input type="text" class="form-control" [(ngModel)]="trait" placeholder="Trait">
     </div>
   </div>

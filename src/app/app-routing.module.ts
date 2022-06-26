@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/services/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HouseComponent } from './components/house/house.component';
+import { PlanetComponent } from './components/planet/planet.component';
 import { SignComponent } from './components/sign/sign.component';
 import { StarComponent } from './components/star/star.component';
 import { MainComponent } from './shared/main/main.component';
 import { SigninComponent } from './shared/signin/signin.component';
-import { UploadbulkComponent } from './uploadbulk/uploadbulk.component';
 
 const routes: Routes = [];
 
@@ -18,7 +18,8 @@ const routes: Routes = [];
       {path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard]},
       {path: 'star', component: StarComponent, canActivate : [AuthGuard]},
       {path: 'sign', component: SignComponent, canActivate : [AuthGuard]},
-      {path: 'upload', component: UploadbulkComponent, canActivate : [AuthGuard]},
+      {path: 'house', component: HouseComponent, canActivate : [AuthGuard]},
+      {path: 'planet', component: PlanetComponent, canActivate : [AuthGuard]},
       
     ]},
     {path: '', component: SigninComponent},

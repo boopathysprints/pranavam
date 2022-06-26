@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LordInHouseService } from 'src/services/lordinhouse.service';
 import {MessageService} from 'primeng/api';
 import { Table } from 'primeng/table';
+import { GeneralService } from 'src/services/general.service';
 
 
 @Component({
@@ -12,6 +13,8 @@ import { Table } from 'primeng/table';
 })
 export class LordinhouseComponent implements OnInit {
   cols: any[];
+  houseTypeData: any[]=[];
+  allHouses: any[]=[];
   lordInHouseList: any;
   house: string;
   lord: string;
@@ -22,7 +25,7 @@ export class LordinhouseComponent implements OnInit {
 
   @ViewChild('lordinhouseTable') lordinhouseTable: Table | undefined;
 
-  constructor(private lordInHouseService: LordInHouseService, private messageService: MessageService) { }
+  constructor(private generalService: GeneralService, private lordInHouseService: LordInHouseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -31,6 +34,21 @@ export class LordinhouseComponent implements OnInit {
       { field: 'trait', header: 'Trait' }      
   ];
     this.read_All_LordInHouse();
+  }
+
+  get_House_Type_Values(){
+    this.generalService.getHouseTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.houseTypeData.push(e);
+      });
+    });
+    setTimeout(() => this.update_House_Type_Values(), 3000);
+  }
+
+  update_House_Type_Values(){
+    var houseArray = this.houseTypeData[0].split(',');
+    houseArray.forEach(house=> this.allHouses.push({ name: house, value: house }));
   }
 
   onRowSelect(event) {

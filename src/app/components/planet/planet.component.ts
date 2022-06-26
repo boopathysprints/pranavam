@@ -13,6 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 export class PlanetComponent implements OnInit {
 
   cols: any[];
+  planetTypeData: any[]=[];
   planetList: any;
   planet: string;
   type: string;
@@ -21,8 +22,8 @@ export class PlanetComponent implements OnInit {
   idToEditorDelete: string;
   selectedPlanet: any;
   selecteForEditorDel: Boolean = false;
-  allPlanets: any;
-  allValues: any;
+  allPlanets: any[]=[];
+  allValues: any[]=[];
 
   @ViewChild('PlanetTable') PlanetTable: Table | undefined;
 
@@ -30,14 +31,34 @@ export class PlanetComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'Planet', header: 'Planet' },
+      { field: 'planet', header: 'Planet' },
       { field: 'type', header: 'Type' },
       { field: 'value', header: 'Value' }
     ];
 
     this.read_All_Planet();
-    this.allPlanets = this.generalService.get_All_Planets();
-    this.allValues = this.generalService.get_All_Values();
+    this.get_Planet_Type_Values();
+    
+ 
+  }
+
+  get_Planet_Type_Values(){
+    this.generalService.getPlanetTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.planetTypeData.push(e);
+      });
+    });
+    setTimeout(() => this.update_Planet_Type_Values(), 3000);
+  }
+
+  update_Planet_Type_Values(){
+    var signArray = this.planetTypeData[0].split(',');
+    var typeArray = this.planetTypeData[1].split(',');
+    signArray.forEach(planet=> this.allPlanets.push({ name: planet, value: planet }));
+    typeArray.forEach(type=> {
+      if(type && type != '')
+      this.allValues.push({ name: type, value: type })});;
   }
 
   onRowSelect(event) {
