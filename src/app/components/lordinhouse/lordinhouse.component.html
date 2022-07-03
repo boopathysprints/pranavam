@@ -3,44 +3,47 @@
   <p-toast></p-toast>
   <div class="row" style="margin-top: 25px;">
     <div class="col-md-4">
-      <p-dropdown [options]="allHouses" [(ngModel)]="lord" optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="allOp1s" [(ngModel)]="option1Selected" optionValue="value" optionLabel="name"></p-dropdown>
     </div>
     <div class="col-md-4">
-      <p-dropdown [options]="allHouses" [(ngModel)]="house" optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="allOp2s" [(ngModel)]="option2Selected" optionValue="value" optionLabel="name"></p-dropdown>
     </div>
-    <div class="col-md-4">
-      <input type="text" class="form-control" [(ngModel)]="trait" placeholder="Trait">
+    <div *ngIf="selecteForEditorDel" class="col-md-3">
+      <input type="text" pInputText class="top20" [(ngModel)]="value" placeholder="value">
+    </div>
+    <div *ngIf="!selecteForEditorDel" class="col-md-4">
+      <textarea pInputTextarea [(ngModel)]="csvalues"></textarea>
     </div>
   </div>
 
   <div class="row" style="margin-top: 25px;">
     <div class="col-md-3" *ngIf="!selecteForEditorDel">
-      <button type="button" (click)="create_LordInHouse()" [disabled]="!house || !lord || !trait"
+      <button type="button" (click)="create_Item()" [disabled]="!option1Selected || !option2Selected || !csvalues"
         class="btn btn-primary">+
         Create</button>
     </div>
     <div class="col-md-3" *ngIf="selecteForEditorDel">
-      <button type="button" (click)="Update_LordInHouse()" [disabled]="!house || !lord || !trait"
+      <button type="button" (click)="update_Item()" [disabled]="!option1Selected || !option2Selected || !value"
         class="btn btn-primary">
         Update</button>
     </div>
     <div class="col-md-3" *ngIf="selecteForEditorDel">
-      <button type="button" (click)="Delete_LordInHouse()" [disabled]="!house || !lord || !trait"
+      <button type="button" (click)="delete_Item()" [disabled]="!option1Selected || !option2Selected || !value"
         class="btn btn-primary">
         Delete</button>
     </div>
     <div class="col-md-3" *ngIf="selecteForEditorDel">
-      <button type="button" (click)="cancel_LordInHouse()" [disabled]="!house || !lord || !trait"
+      <button type="button" (click)="cancel_Item()" [disabled]="!option1Selected || !option2Selected"
         class="btn btn-primary">
         Cancel</button>
     </div>
   </div>
 
   <div class="card" style="margin-top: 25px;">
-    <p-table #lordinhouseTable [columns]="cols" [paginator]="true" 
-    [rows]="5" [value]="lordInHouseList" selectionMode="single"
+    <p-table #dataTable [columns]="cols" [paginator]="true" 
+    [rows]="5" [value]="tableData" selectionMode="single"
       [globalFilterFields]="['house','lord','trait']" (onRowSelect)="onRowSelect($event)"
-      [(selection)]="selectedLordInHouse" dataKey="id" responsiveLayout="scroll">
+      [(selection)]="selectedItem" dataKey="id" responsiveLayout="scroll">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns">
@@ -50,15 +53,15 @@
         <tr>
           <th *ngFor="let col of columns" [ngSwitch]="col.field">
             <input #colInput pInputText type="text"
-              (input)="lordinhouseTable.filter(colInput.value, col.field, 'contains')" />
+              (input)="dataTable.filter(colInput.value, col.field, 'contains')" />
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-lordInHouse>
-        <tr [pSelectableRow]="lordInHouse">
-          <td>{{lordInHouse.house}}</td>
-          <td>{{lordInHouse.lord}}</td>
-          <td>{{lordInHouse.trait}}</td>
+      <ng-template pTemplate="body" let-element>
+        <tr [pSelectableRow]="element">
+          <td>{{element.lord}}</td>
+          <td>{{element.sign}}</td>
+          <td>{{element.value}}</td>
         </tr>
       </ng-template>
     </p-table>

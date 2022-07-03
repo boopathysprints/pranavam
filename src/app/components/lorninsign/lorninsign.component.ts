@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MessageService} from 'primeng/api';
 import { GeneralService } from 'src/services/general.service';
 import { LordinsignService } from 'src/services/lordinsign.service';

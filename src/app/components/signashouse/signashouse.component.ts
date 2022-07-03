@@ -3,14 +3,13 @@ import {MessageService} from 'primeng/api';
 import { GeneralService } from 'src/services/general.service';
 import { LordinsignService } from 'src/services/lordinsign.service';
 
-
 @Component({
-  selector: 'app-lordinhouse',
-  templateUrl: './lordinhouse.component.html',
-  styleUrls: ['./lordinhouse.component.css'],
-  providers: [MessageService]
+  selector: 'app-signashouse',
+  templateUrl: './signashouse.component.html',
+  styleUrls: ['./signashouse.component.css']
 })
-export class LordinhouseComponent implements OnInit {
+export class SignashouseComponent implements OnInit {
+
   cols: any[];
 
   op1Data: any[]=[];
@@ -135,4 +134,5 @@ export class LordinhouseComponent implements OnInit {
     this.messageService.add({severity:'success', closable:false, summary:'Item deleted', detail: this.selectedItem.id + " is deleted"});
     this. cancel_Item();
   }
+
 }
