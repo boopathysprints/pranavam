@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LordInHouseService } from 'src/services/lordinhouse.service';
 import {MessageService} from 'primeng/api';
-import { Table } from 'primeng/table';
 import { GeneralService } from 'src/services/general.service';
 
 
@@ -22,8 +21,6 @@ export class LordinhouseComponent implements OnInit {
   idToEditorDelete: string;
   selectedLordInHouse: any;
   selecteForEditorDel: Boolean = false;
-
-  @ViewChild('lordinhouseTable') lordinhouseTable: Table | undefined;
 
   constructor(private generalService: GeneralService, private lordInHouseService: LordInHouseService, private messageService: MessageService) { }
 

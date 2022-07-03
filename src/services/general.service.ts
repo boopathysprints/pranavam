@@ -28,6 +28,4 @@ export class GeneralService {
   getPlanetTypeInfo() {
     return this.http.get(this.planetTypeData, { responseType: 'text' });
   }
-
-  
 }

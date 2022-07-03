@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/services/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HouseComponent } from './components/house/house.component';
+import { LorninsignComponent } from './components/lorninsign/lorninsign.component';
 import { PlanetComponent } from './components/planet/planet.component';
 import { SignComponent } from './components/sign/sign.component';
 import { StarComponent } from './components/star/star.component';
@@ -20,7 +21,7 @@ const routes: Routes = [];
       {path: 'sign', component: SignComponent, canActivate : [AuthGuard]},
       {path: 'house', component: HouseComponent, canActivate : [AuthGuard]},
       {path: 'planet', component: PlanetComponent, canActivate : [AuthGuard]},
-      
+      {path: 'lordinsign', component: LorninsignComponent, canActivate : [AuthGuard]},
     ]},
     {path: '', component: SigninComponent},
     {path: 'login', component: SigninComponent},
