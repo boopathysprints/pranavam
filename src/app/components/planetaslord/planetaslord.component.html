@@ -29,7 +29,7 @@
           Update</button>
       </div>
       <div class="col-md-3" *ngIf="selecteForEditorDel">
-        <button type="button" (click)="delete_Item()" [disabled]="!option1Selected || !option2Selected || !value"
+        <button type="button" (click)="confirmDelete()" [disabled]="!option1Selected || !option2Selected || !value"
           class="btn btn-primary">
           Delete</button>
       </div>
