@@ -12,6 +12,10 @@ export class SignashouseService {
       return this.firestore.collection('signashouse').snapshotChanges();
   }
 
+  read_Items_Where(house,sign) {
+    return this.firestore.collection('signashouse', ref => ref.where('house', '==', house).where('sign', '==', sign)).snapshotChanges();
+}
+
   create_Item(record) {
       return this.firestore.collection('signashouse').add(record);
   }
