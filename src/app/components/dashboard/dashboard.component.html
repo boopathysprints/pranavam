@@ -8,12 +8,35 @@
     <div class="col-md-4">
       <p-dropdown [options]="allOp2s" [(ngModel)]="option2Selected"  optionValue="value" optionLabel="name"></p-dropdown>
     </div>
+  </div>
 
+  <div class="row">
+    <div class="col-md-4">
+      <p-dropdown [disabled]="true" [options]="allOp1s" [(ngModel)]="option1Selected" optionValue="value" optionLabel="name"></p-dropdown>
+      அதிபதி 
+    </div>
+    
+    <div class="col-md-4">
+      <p-dropdown [options]="allOp3s"  optionValue="value" optionLabel="name"></p-dropdown>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <p-dropdown [options]="allOp1s" optionValue="value" optionLabel="name"></p-dropdown>
+      வீடான 
+    </div>
+    
+    <div class="col-md-4">
+      <p-dropdown [options]="allOp2s"  optionValue="value" optionLabel="name"></p-dropdown>
+      -ல் உள்ளது
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-md-4">
       <button class="top20" pButton type="button" (click)="read_Items_Where()" label="Check" ></button>
     </div>
-
-    
   </div>
 
     <div class="row" style="margin-top: 25px;">

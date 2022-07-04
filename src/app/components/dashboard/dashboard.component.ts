@@ -11,9 +11,11 @@ export class DashboardComponent implements OnInit {
 
   op1Data: any[] = [];
   op2Data: any[] = [];
-
+  op3Data: any[] = [];
   allOp1s: any[] = [];
   allOp2s: any[] = [];
+  allOp3s: any[] = [];
+
   tableData: any;
   chip1s: any[] = [];
 
@@ -28,6 +30,7 @@ export class DashboardComponent implements OnInit {
 
     this.get_Option1_Values();
     this.get_Option2_Values();
+    this.get_Option3_Values();
   }
 
 
@@ -40,13 +43,8 @@ export class DashboardComponent implements OnInit {
       var valuesArray = this.op1Data[0].split(',');
       valuesArray.forEach(element => this.allOp1s.push({ name: element, value: element }));
     });
-    //setTimeout(() => this.update_Option1_Values(), 1000);
   }
 
-  update_Option1_Values() {
-    var valuesArray = this.op1Data[0].split(',');
-    valuesArray.forEach(element => this.allOp1s.push({ name: element, value: element }));
-  }
 
   get_Option2_Values() {
     this.generalService.getSignTypeInfo().subscribe(data => {
@@ -57,13 +55,20 @@ export class DashboardComponent implements OnInit {
       var valuesArray = this.op2Data[0].split(',');
       valuesArray.forEach(element => this.allOp2s.push({ name: element, value: element }));
     });
-    //setTimeout(() => this.update_Option2_Values(), 1000);
   }
 
-  update_Option2_Values() {
-    var valuesArray = this.op2Data[0].split(',');
-    valuesArray.forEach(element => this.allOp2s.push({ name: element, value: element }));
+  get_Option3_Values() {
+    this.generalService.getPlanetTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.op3Data.push(e);
+      });
+      var valuesArray = this.op3Data[0].split(',');
+      valuesArray.forEach(element => this.allOp3s.push({ name: element, value: element }));
+    });
   }
+
+
 
   read_Items_Where() {
     this.dbService.read_Items_Where(this.option1Selected, this.option2Selected).subscribe(data => {
