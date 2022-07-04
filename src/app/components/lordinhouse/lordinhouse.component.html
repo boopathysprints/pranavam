@@ -28,7 +28,7 @@
         Update</button>
     </div>
     <div class="col-md-3" *ngIf="selecteForEditorDel">
-      <button type="button" (click)="delete_Item()" [disabled]="!option1Selected || !option2Selected || !value"
+      <button type="button" (click)="confirmDelete()" [disabled]="!option1Selected || !option2Selected || !value"
         class="btn btn-primary">
         Delete</button>
     </div>
@@ -60,7 +60,7 @@
       <ng-template pTemplate="body" let-element>
         <tr [pSelectableRow]="element">
           <td>{{element.lord}}</td>
-          <td>{{element.sign}}</td>
+          <td>{{element.house}}</td>
           <td>{{element.value}}</td>
         </tr>
       </ng-template>

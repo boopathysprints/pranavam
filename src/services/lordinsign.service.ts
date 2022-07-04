@@ -21,6 +21,6 @@ export class LordinsignService {
   }
   
   delete_Item(record_id) {
-      this.firestore.doc('lordinsign/' + record_id).delete();
+      this.firestore.doc('lordinsigns/' + record_id).delete();
   }
 }

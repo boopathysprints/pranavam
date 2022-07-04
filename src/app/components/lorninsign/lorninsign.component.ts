@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { GeneralService } from 'src/services/general.service';
 import { LordinsignService } from 'src/services/lordinsign.service';
 
 @Component({
   selector: 'app-lorninsign',
   templateUrl: './lorninsign.component.html',
-  styleUrls: ['./lorninsign.component.css']
+  styleUrls: ['./lorninsign.component.css'],
+  providers: [ConfirmationService,MessageService]
 })
 export class LorninsignComponent implements OnInit {
   cols: any[];
@@ -25,7 +26,7 @@ export class LorninsignComponent implements OnInit {
   selectedItem: any;
   selecteForEditorDel: Boolean = false;
 
-  constructor(private generalService: GeneralService, private dbService: LordinsignService, private messageService: MessageService) { }
+  constructor(private generalService: GeneralService,private confirmationService: ConfirmationService, private dbService: LordinsignService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -126,6 +127,23 @@ export class LorninsignComponent implements OnInit {
    
     this.messageService.add({severity:'success', closable:false, summary:'Item updated', detail: this.selectedItem.id + " is updated"});
     this. cancel_Item();
+  }
+
+  confirmDelete() {
+    console.log('enter')
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.delete_Item();
+        //this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+      },
+      reject: () => {
+        this.cancel_Item();
+        //this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      }
+    });
   }
 
   delete_Item() {

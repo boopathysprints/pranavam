@@ -1,6 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
     <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
     <div class="row" style="margin-top: 25px;">
       <div class="col-md-4">
         <p-dropdown [options]="allOp1s" [(ngModel)]="option1Selected" optionValue="value" optionLabel="name"></p-dropdown>
@@ -59,8 +60,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-element>
           <tr [pSelectableRow]="element">
+            <td>{{element.planet}}</td>
             <td>{{element.lord}}</td>
-            <td>{{element.sign}}</td>
             <td>{{element.value}}</td>
           </tr>
         </ng-template>

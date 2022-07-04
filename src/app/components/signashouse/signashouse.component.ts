@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { GeneralService } from 'src/services/general.service';
-import { LordinsignService } from 'src/services/lordinsign.service';
+import { SignashouseService } from 'src/services/signashouse.service';
 
 @Component({
   selector: 'app-signashouse',
   templateUrl: './signashouse.component.html',
-  styleUrls: ['./signashouse.component.css']
+  styleUrls: ['./signashouse.component.css'],
+  providers: [ConfirmationService,MessageService]
 })
 export class SignashouseComponent implements OnInit {
 
@@ -26,12 +27,12 @@ export class SignashouseComponent implements OnInit {
   selectedItem: any;
   selecteForEditorDel: Boolean = false;
 
-  constructor(private generalService: GeneralService, private dbService: LordinsignService, private messageService: MessageService) { }
+  constructor(private generalService: GeneralService,private confirmationService: ConfirmationService, private dbService: SignashouseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cols = [
-      {field: 'lord', header: 'Lord' },
-      { field: 'sign', header: 'Sign' },
+      {field: 'sign', header: 'Sign' },
+      { field: 'house', header: 'House' },
       { field: 'value', header: 'Value' }      
   ];
     this.read_All_Items();
@@ -40,7 +41,7 @@ export class SignashouseComponent implements OnInit {
   }
 
   get_Option1_Values(){
-    this.generalService.getHouseTypeInfo().subscribe(data => {
+    this.generalService.getSignTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
         this.op1Data.push(e);
@@ -55,7 +56,7 @@ export class SignashouseComponent implements OnInit {
   }
 
   get_Option2_Values(){
-    this.generalService.getSignTypeInfo().subscribe(data => {
+    this.generalService.getHouseTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
         this.op2Data.push(e);
@@ -71,8 +72,8 @@ export class SignashouseComponent implements OnInit {
 
   onRowSelect(event) {
     this.idToEditorDelete = this.selectedItem.id;
-    this.option1Selected = this.selectedItem.lord;
-    this.option2Selected = this.selectedItem.sign;
+    this.option1Selected = this.selectedItem.sign;
+    this.option2Selected = this.selectedItem.house;
     this.value = this.selectedItem.value;
     this.selecteForEditorDel = true;
   }
@@ -92,8 +93,8 @@ export class SignashouseComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           isEdit: false,
-          lord: e.payload.doc.data()['lord'],
           sign: e.payload.doc.data()['sign'],
+          house: e.payload.doc.data()['house'],
           value: e.payload.doc.data()['value'],
         };
       })
@@ -102,8 +103,8 @@ export class SignashouseComponent implements OnInit {
 
   create_Item() {
     let record = {};
-    record['lord'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['sign'] = this.option1Selected;
+    record['house'] = this.option2Selected;
     var valuesArray = this.csvalues.split(',');
     for (var i = 0; i < valuesArray.length; i++) {
       record['value'] = valuesArray[i];
@@ -120,13 +121,30 @@ export class SignashouseComponent implements OnInit {
 
   update_Item() {
     let record = {};
-    record['lord'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['sign'] = this.option1Selected;
+    record['house'] = this.option2Selected;
     record['value'] = this.value;
     this.dbService.update_Item(this.idToEditorDelete, record);
    
     this.messageService.add({severity:'success', closable:false, summary:'Item updated', detail: this.selectedItem.id + " is updated"});
     this. cancel_Item();
+  }
+
+  confirmDelete() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        console.log(this.idToEditorDelete);
+        this.delete_Item();
+        //this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+      },
+      reject: () => {
+        this.cancel_Item();
+        //this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      }
+    });
   }
 
   delete_Item() {

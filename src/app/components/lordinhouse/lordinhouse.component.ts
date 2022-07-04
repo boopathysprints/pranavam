@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { GeneralService } from 'src/services/general.service';
-import { LordinsignService } from 'src/services/lordinsign.service';
+import { LordinhouseService } from 'src/services/lordinhouse.service';
 
 
 @Component({
   selector: 'app-lordinhouse',
   templateUrl: './lordinhouse.component.html',
   styleUrls: ['./lordinhouse.component.css'],
-  providers: [MessageService]
+  providers: [ConfirmationService,MessageService]
 })
 export class LordinhouseComponent implements OnInit {
   cols: any[];
@@ -27,12 +27,12 @@ export class LordinhouseComponent implements OnInit {
   selectedItem: any;
   selecteForEditorDel: Boolean = false;
 
-  constructor(private generalService: GeneralService, private dbService: LordinsignService, private messageService: MessageService) { }
+  constructor(private generalService: GeneralService, private confirmationService: ConfirmationService, private dbService: LordinhouseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.cols = [
       {field: 'lord', header: 'Lord' },
-      { field: 'sign', header: 'Sign' },
+      { field: 'house', header: 'House' },
       { field: 'value', header: 'Value' }      
   ];
     this.read_All_Items();
@@ -56,7 +56,7 @@ export class LordinhouseComponent implements OnInit {
   }
 
   get_Option2_Values(){
-    this.generalService.getSignTypeInfo().subscribe(data => {
+    this.generalService.getHouseTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
         this.op2Data.push(e);
@@ -73,7 +73,7 @@ export class LordinhouseComponent implements OnInit {
   onRowSelect(event) {
     this.idToEditorDelete = this.selectedItem.id;
     this.option1Selected = this.selectedItem.lord;
-    this.option2Selected = this.selectedItem.sign;
+    this.option2Selected = this.selectedItem.house;
     this.value = this.selectedItem.value;
     this.selecteForEditorDel = true;
   }
@@ -94,7 +94,7 @@ export class LordinhouseComponent implements OnInit {
           id: e.payload.doc.id,
           isEdit: false,
           lord: e.payload.doc.data()['lord'],
-          sign: e.payload.doc.data()['sign'],
+          house: e.payload.doc.data()['house'],
           value: e.payload.doc.data()['value'],
         };
       })
@@ -104,7 +104,7 @@ export class LordinhouseComponent implements OnInit {
   create_Item() {
     let record = {};
     record['lord'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['house'] = this.option2Selected;
     var valuesArray = this.csvalues.split(',');
     for (var i = 0; i < valuesArray.length; i++) {
       record['value'] = valuesArray[i];
@@ -122,12 +122,29 @@ export class LordinhouseComponent implements OnInit {
   update_Item() {
     let record = {};
     record['lord'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['house'] = this.option2Selected;
     record['value'] = this.value;
     this.dbService.update_Item(this.idToEditorDelete, record);
    
     this.messageService.add({severity:'success', closable:false, summary:'Item updated', detail: this.selectedItem.id + " is updated"});
     this. cancel_Item();
+  }
+
+  confirmDelete() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        console.log(this.idToEditorDelete);
+        this.delete_Item();
+        //this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+      },
+      reject: () => {
+        this.cancel_Item();
+        //this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      }
+    });
   }
 
   delete_Item() {

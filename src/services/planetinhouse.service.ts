@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanetinhouseService {
 
-  constructor() { }
+  constructor(private firestore: AngularFirestore) { }
+
+  read_All_Items() {
+      return this.firestore.collection('planetinhouse').snapshotChanges();
+  }
+
+  create_Item(record) {
+      return this.firestore.collection('planetinhouse').add(record);
+  }
+
+  update_Item(recordID,record){
+      this.firestore.doc('planetinhouse/' + recordID).update(record);
+  }
+  
+  delete_Item(record_id) {
+      this.firestore.doc('planetinhouse/' + record_id).delete();
+  }
 }
