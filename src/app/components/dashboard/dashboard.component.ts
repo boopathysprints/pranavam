@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { GeneralService } from 'src/services/general.service';
+import { LordinhouseService } from 'src/services/lordinhouse.service';
+import { PlanetinhouseService } from 'src/services/planetinhouse.service';
 import { SignashouseService } from 'src/services/signashouse.service';
 
 @Component({
@@ -16,15 +19,24 @@ export class DashboardComponent implements OnInit {
   allOp2s: any[] = [];
   allOp3s: any[] = [];
 
-  tableData: any;
+  tableData1: any;
+  tableData2: any;
+  tableData3: any;
   chip1s: any[] = [];
+  chip2s: any[] = [];
+  chip3s: any[] = [];
 
   option1Selected: string;
   option2Selected: string;
+  option3Selected: string;
+  option4Selected: string;
 
   visible: boolean = false;
 
-  constructor(private generalService: GeneralService, private dbService: SignashouseService) { }
+  constructor(private generalService: GeneralService,
+    private db2Service: LordinhouseService,
+    private db3Service: PlanetinhouseService
+  ) { }
 
   ngOnInit(): void {
 
@@ -71,26 +83,53 @@ export class DashboardComponent implements OnInit {
 
 
   read_Items_Where() {
-    this.dbService.read_Items_Where(this.option1Selected, this.option2Selected).subscribe(data => {
-      this.tableData = data.map(e => {
-        return {
-          // id: e.payload.doc.id,
-          // sign: e.payload.doc.data()['sign'],
-          // house: e.payload.doc.data()['house'],
-          value: e.payload.doc.data()['value']
-        };
-      })
-    });
+
+    if (this.option1Selected != undefined && this.option3Selected != undefined) {
+      this.db2Service.read_Items_Where(this.option1Selected, this.option3Selected).subscribe(data => {
+        this.tableData2 = data.map(e => {
+          return {
+            // id: e.payload.doc.id,
+            // sign: e.payload.doc.data()['sign'],
+            // house: e.payload.doc.data()['house'],
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
+    if (this.option4Selected != undefined && this.option3Selected != undefined) {
+      this.db3Service.read_Items_Where(this.option4Selected, this.option3Selected).subscribe(data => {
+        this.tableData3 = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
+
+
     setTimeout(() => this.update_Values(), 2000);
   }
 
   update_Values() {
-    this.chip1s = [];
-    this.tableData.forEach(element => {
-      if(this.chip1s.indexOf(element.value) === -1) {
-        this.chip1s.push(element.value)
+    if (this.option1Selected != undefined && this.option3Selected != undefined) {
+      this.chip2s = [];
+      this.tableData2.forEach(element => {
+        if (this.chip2s.indexOf(element.value) === -1) {
+          this.chip2s.push(element.value)
+        }
+      }
+      );
+    }
+
+    this.chip3s = [];
+    this.tableData3.forEach(element => {
+      if (this.chip3s.indexOf(element.value) === -1) {
+        this.chip3s.push(element.value)
       }
     }
     );
+
   }
 }

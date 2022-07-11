@@ -5,27 +5,25 @@
       வீடு
     </div>
     
-    <div class="col-md-4">
+    <div class="col-md-6">
       <p-dropdown [options]="allOp2s" [(ngModel)]="option2Selected"  optionValue="value" optionLabel="name"></p-dropdown>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4">
-      <p-dropdown [disabled]="true" [options]="allOp1s" [(ngModel)]="option1Selected" optionValue="value" optionLabel="name"></p-dropdown>
-      அதிபதி 
+      அதன் அதிபதி
     </div>
     
-    <div class="col-md-4">
-      <p-dropdown [options]="allOp3s"  optionValue="value" optionLabel="name"></p-dropdown>
-    </div>
   </div>
 
   <div class="row">
     <div class="col-md-4">
-      <p-dropdown [options]="allOp1s" optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="allOp3s" [(ngModel)]="option4Selected"  optionValue="value" optionLabel="name"></p-dropdown>
+    </div>
+    <div class="col-md-6">
+      <p-dropdown [options]="allOp1s" [(ngModel)]="option3Selected" optionValue="value" optionLabel="name"></p-dropdown>
       வீடான 
     </div>
+  </div>
+
+  <div class="row">
+    
     
     <div class="col-md-4">
       <p-dropdown [options]="allOp2s"  optionValue="value" optionLabel="name"></p-dropdown>
@@ -39,15 +37,31 @@
     </div>
   </div>
 
-    <div class="row" style="margin-top: 25px;">
+    <div *ngIf="chip2s.length > 0" class="row" style="margin-top: 25px;">
       <div class="col-12 col-lg-4 col-xxl-3 d-flex">
         <div class="card flex-fill w-100">
           <div class="card-header">
-            <h5 class="card-title mb-0">{{option1Selected }} வீடு {{option2Selected}}</h5>
+            <h5 class="card-title mb-0">{{option1Selected }} அதிபதி  {{option3Selected}} வீட்டில்</h5>
           </div>
           <div class="card-body d-flex w-100">
-            <div *ngIf="chip1s.length > 0" class="align-self-center chart chart-lg tile">
-              <p-chip label="{{data}}"  *ngFor="let data of chip1s" >
+            <div class="align-self-center chart chart-lg tile">
+              <p-chip label="{{data}}"  *ngFor="let data of chip2s" >
+              </p-chip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="chip3s.length > 0" class="row" style="margin-top: 25px;">
+      <div class="col-12 col-lg-4 col-xxl-3 d-flex">
+        <div class="card flex-fill w-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{option4Selected }} -  {{option3Selected}} வீட்டில்</h5>
+          </div>
+          <div class="card-body d-flex w-100">
+            <div  class="align-self-center chart chart-lg tile">
+              <p-chip label="{{data}}"  *ngFor="let data of chip3s" >
               </p-chip>
             </div>
           </div>

@@ -8,6 +8,10 @@ export class LordinhouseService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  read_Items_Where(lord,house) {
+    return this.firestore.collection('lordinhouse', ref => ref.where('lord', '==', lord).where('house', '==', house)).snapshotChanges();
+}
+
   read_All_Items() {
       return this.firestore.collection('lordinhouse').snapshotChanges();
   }
