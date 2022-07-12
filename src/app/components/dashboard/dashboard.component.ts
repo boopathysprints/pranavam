@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { GeneralService } from 'src/services/general.service';
+import { HouseService } from 'src/services/house.service';
 import { LordinhouseService } from 'src/services/lordinhouse.service';
 import { PlanetinhouseService } from 'src/services/planetinhouse.service';
 import { SignashouseService } from 'src/services/signashouse.service';
@@ -12,31 +13,39 @@ import { SignashouseService } from 'src/services/signashouse.service';
 })
 export class DashboardComponent implements OnInit {
 
-  op1Data: any[] = [];
-  op2Data: any[] = [];
-  op3Data: any[] = [];
-  allOp1s: any[] = [];
-  allOp2s: any[] = [];
-  allOp3s: any[] = [];
+  houseData: any[] = [];
+  signData: any[] = [];
+  planetData: any[] = [];
+  houses: any[] = [];
+  signs: any[] = [];
+  planets: any[] = [];
 
-  tableData1: any;
-  tableData2: any;
-  tableData3: any;
-  chip1s: any[] = [];
-  chip2s: any[] = [];
-  chip3s: any[] = [];
+  lordinhouseData: any;
+  planetinhouseData: any;
+  actualhouseData: any;
+  placedhouseData: any;
 
-  option1Selected: string;
-  option2Selected: string;
-  option3Selected: string;
-  option4Selected: string;
+  lordinhouseDetails: any[] = [];
+  planetinhouseDetails: any[] = [];
+  actualhouseDetails: any[] = [];
+  placedhouseDetails: any[] = [];
+
+  lagnam: string;
+  rasi: string;
+  actualHouse: string;
+  actualHouseSign: string;
+  actualHouseLord: string;
+  placedHouse: string;
+  placedHouseSign: string;
 
   visible: boolean = false;
 
   constructor(private generalService: GeneralService,
-    private db2Service: LordinhouseService,
-    private db3Service: PlanetinhouseService
+    private _lordinhouseService: LordinhouseService,
+    private _planetinhouseService: PlanetinhouseService,
+    private _houseService: HouseService
   ) { }
+
 
   ngOnInit(): void {
 
@@ -47,59 +56,68 @@ export class DashboardComponent implements OnInit {
 
 
   get_Option1_Values() {
+    this.houses.push({ name: '', value: '' });
     this.generalService.getHouseTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
-        this.op1Data.push(e);
+        this.houseData.push(e);
       });
-      var valuesArray = this.op1Data[0].split(',');
-      valuesArray.forEach(element => this.allOp1s.push({ name: element, value: element }));
+      var valuesArray = this.houseData[0].split(',');
+      valuesArray.forEach(element => this.houses.push({ name: element, value: element }));
     });
   }
 
 
   get_Option2_Values() {
+    this.signs.push({ name: '', value: '' });
     this.generalService.getSignTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
-        this.op2Data.push(e);
+        this.signData.push(e);
       });
-      var valuesArray = this.op2Data[0].split(',');
-      valuesArray.forEach(element => this.allOp2s.push({ name: element, value: element }));
+      var valuesArray = this.signData[0].split(',');
+      valuesArray.forEach(element => this.signs.push({ name: element, value: element }));
     });
   }
 
   get_Option3_Values() {
+    this.planets.push({ name: '', value: '' });
     this.generalService.getPlanetTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
-        this.op3Data.push(e);
+        this.planetData.push(e);
       });
-      var valuesArray = this.op3Data[0].split(',');
-      valuesArray.forEach(element => this.allOp3s.push({ name: element, value: element }));
+      var valuesArray = this.planetData[0].split(',');
+      valuesArray.forEach(element => this.planets.push({ name: element, value: element }));
     });
   }
 
+  ClearAll() {
+    this.lagnam = '';
+    this.rasi = '';
+    this.actualHouse = '';
+    this.actualHouseSign = '';
+    this.actualHouseLord = '';
+    this.placedHouse = '';
+    this.placedHouseSign = '';
+    this.lordinhouseDetails = [];
+    this.planetinhouseDetails = [];
+    this.actualhouseDetails = [];
+    this.placedhouseDetails = [];
+  }
 
+  ClearChips() {
+    this.lordinhouseDetails = [];
+    this.planetinhouseDetails = [];
+    this.actualhouseDetails = [];
+    this.placedhouseDetails = [];
+  }
 
   read_Items_Where() {
-
-    if (this.option1Selected != undefined && this.option3Selected != undefined) {
-      this.db2Service.read_Items_Where(this.option1Selected, this.option3Selected).subscribe(data => {
-        this.tableData2 = data.map(e => {
-          return {
-            // id: e.payload.doc.id,
-            // sign: e.payload.doc.data()['sign'],
-            // house: e.payload.doc.data()['house'],
-            value: e.payload.doc.data()['value']
-          };
-        })
-      });
-    }
-
-    if (this.option4Selected != undefined && this.option3Selected != undefined) {
-      this.db3Service.read_Items_Where(this.option4Selected, this.option3Selected).subscribe(data => {
-        this.tableData3 = data.map(e => {
+    this.ClearChips();
+    if (this.actualHouse != undefined && this.actualHouse != '') {
+      this._houseService.read_Items_Where(this.actualHouse).subscribe(data => {
+        this.actualhouseData = data.map(e => {
           return {
             value: e.payload.doc.data()['value']
           };
@@ -107,29 +125,75 @@ export class DashboardComponent implements OnInit {
       });
     }
 
+    if (this.placedHouse != undefined && this.placedHouse != '') {
+      this._houseService.read_Items_Where(this.placedHouse).subscribe(data => {
+        this.placedhouseData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
 
+    if (this.actualHouse != undefined && this.actualHouse != '' && this.placedHouse != undefined && this.placedHouse != '') {
+      this._lordinhouseService.read_Items_Where(this.actualHouse, this.placedHouse).subscribe(data => {
+        this.lordinhouseData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
 
+    if (this.actualHouseLord != undefined && this.actualHouseLord != '' && this.placedHouse != undefined && this.placedHouse != '') {
+      this._planetinhouseService.read_Items_Where(this.actualHouseLord, this.placedHouse).subscribe(data => {
+        this.planetinhouseData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
     setTimeout(() => this.update_Values(), 2000);
   }
 
   update_Values() {
-    if (this.option1Selected != undefined && this.option3Selected != undefined) {
-      this.chip2s = [];
-      this.tableData2.forEach(element => {
-        if (this.chip2s.indexOf(element.value) === -1) {
-          this.chip2s.push(element.value)
+    if (this.actualHouse != undefined && this.actualHouse != '') {
+      this.actualhouseDetails = [];
+      this.actualhouseData.forEach(element => {
+        if (this.actualhouseDetails.indexOf(element.value) === -1) {
+          this.actualhouseDetails.push(element.value)
+        }
+      }
+      );
+    }
+    if (this.placedHouse != undefined && this.placedHouse != '' && this.actualHouse != this.placedHouse) {
+      this.placedhouseDetails = [];
+      this.placedhouseData.forEach(element => {
+        if (this.placedhouseDetails.indexOf(element.value) === -1) {
+          this.placedhouseDetails.push(element.value)
+        }
+      }
+      );
+    }
+    if (this.actualHouse != undefined && this.actualHouse != '' && this.placedHouse != undefined && this.placedHouse != '') {
+      this.lordinhouseDetails = [];
+      this.lordinhouseData.forEach(element => {
+        if (this.lordinhouseDetails.indexOf(element.value) === -1) {
+          this.lordinhouseDetails.push(element.value)
         }
       }
       );
     }
 
-    this.chip3s = [];
-    this.tableData3.forEach(element => {
-      if (this.chip3s.indexOf(element.value) === -1) {
-        this.chip3s.push(element.value)
+    if (this.actualHouseLord != undefined && this.actualHouseLord != '' && this.placedHouse != undefined && this.placedHouse != '') {
+      this.planetinhouseDetails = [];
+      this.planetinhouseData.forEach(element => {
+        if (this.planetinhouseDetails.indexOf(element.value) === -1) {
+          this.planetinhouseDetails.push(element.value)
+        }
       }
+      );
     }
-    );
-
   }
 }
