@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   menuItems: MenuItem[] = [
                           { name: "Basic", icon: "sliders", link: "basic" },
-                          { name: "Dashboard", icon: "sliders", link: "dashboard" },
+                          { name: "Advanced", icon: "anchor", link: "dashboard" },
                           { name: "Star", icon: "star", link: "star" },
                           { name: "Sign", icon: "activity", link: "sign" },
                           { name: "House", icon: "home", link: "house" },
@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
                           { name: "Lord-In-House", icon: "at-sign", link: "lordinhouse" },
                           { name: "Sign-as-House", icon: "command", link: "signashouse" },
                         ];
-  selectedItem: string = "Dashboard";
+  selectedItem: string = "Basic";
   
   canShow:boolean = false;
   

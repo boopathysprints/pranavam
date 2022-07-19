@@ -19,7 +19,7 @@ export class AuthenticationService {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         this.isAuthContent.next(true);
-        this._router.navigate(['pranavam/dashboard']);
+        this._router.navigate(['pranavam/basic']);
       }else {
         localStorage.removeItem('user');
         this.isAuthContent.next(false);
