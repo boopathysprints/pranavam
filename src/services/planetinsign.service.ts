@@ -8,6 +8,10 @@ export class PlanetinsignService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  Read_For_Rasi(house) {
+    return this.firestore.collection('planetinsign', ref => ref.where('planet', '==', 'சந்திரன்').where('sign', '==', house)).snapshotChanges();
+  }
+
   read_All_Items() {
       return this.firestore.collection('planetinsign').snapshotChanges();
   }

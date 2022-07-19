@@ -9,8 +9,10 @@ import { AuthenticationService } from 'src/services/authentication.service';
 })
 export class MenuComponent implements OnInit {
 
-  menuItems: MenuItem[] = [{ name: "Dashboard", icon: "sliders", link: "dashboard" },
-                            { name: "Star", icon: "star", link: "star" },
+  menuItems: MenuItem[] = [
+                          { name: "Basic", icon: "sliders", link: "basic" },
+                          { name: "Dashboard", icon: "sliders", link: "dashboard" },
+                          { name: "Star", icon: "star", link: "star" },
                           { name: "Sign", icon: "activity", link: "sign" },
                           { name: "House", icon: "home", link: "house" },
                           { name: "Planet", icon: "sun", link: "planet" },

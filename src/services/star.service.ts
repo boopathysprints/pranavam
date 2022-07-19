@@ -7,6 +7,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class StarService {
 
   constructor(private firestore: AngularFirestore) { }
+  read_Items_Where(star) {
+    return this.firestore.collection('stars', ref => ref.where('star', '==', star)).snapshotChanges();
+}
 
   read_All_Stars() {
       return this.firestore.collection('stars').snapshotChanges();

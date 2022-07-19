@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class LordinhouseService {
+export class UserService {
 
   constructor(private firestore: AngularFirestore) { }
 
@@ -17,7 +17,7 @@ export class LordinhouseService {
   }
 
   create_Item(record) {
-    return this.firestore.collection('lordinhouse').add(record);
+    return this.firestore.collection('user').add(record);
   }
 
   update_Item(recordID, record) {

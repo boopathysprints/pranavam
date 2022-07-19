@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { GeneralService } from 'src/services/general.service';
 import { HouseService } from 'src/services/house.service';
 import { LordinhouseService } from 'src/services/lordinhouse.service';
 import { PlanetinhouseService } from 'src/services/planetinhouse.service';
-import { SignashouseService } from 'src/services/signashouse.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +10,6 @@ import { SignashouseService } from 'src/services/signashouse.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
   houseData: any[] = [];
   signData: any[] = [];
   planetData: any[] = [];
@@ -46,14 +43,11 @@ export class DashboardComponent implements OnInit {
     private _houseService: HouseService
   ) { }
 
-
   ngOnInit(): void {
-
     this.get_Option1_Values();
     this.get_Option2_Values();
     this.get_Option3_Values();
   }
-
 
   get_Option1_Values() {
     this.houses.push({ name: '', value: '' });
@@ -66,7 +60,6 @@ export class DashboardComponent implements OnInit {
       valuesArray.forEach(element => this.houses.push({ name: element, value: element }));
     });
   }
-
 
   get_Option2_Values() {
     this.signs.push({ name: '', value: '' });

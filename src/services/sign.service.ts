@@ -8,6 +8,10 @@ export class SignService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  read_Items_Where(sign) {
+    return this.firestore.collection('signs', ref => ref.where('sign', '==', sign)).snapshotChanges();
+}
+
   read_All_Signs() {
       return this.firestore.collection('signs').snapshotChanges();
   }

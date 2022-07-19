@@ -103,8 +103,8 @@ export class PlanetinsignComponent implements OnInit {
 
   create_Item() {
     let record = {};
-    record['planet'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['planet'] = this.option1Selected.trim();
+    record['sign'] = this.option2Selected.trim();
     var valuesArray = this.csvalues.split(',');
     for (var i = 0; i < valuesArray.length; i++) {
       record['value'] = valuesArray[i];
@@ -121,8 +121,8 @@ export class PlanetinsignComponent implements OnInit {
 
   update_Item() {
     let record = {};
-    record['planet'] = this.option1Selected;
-    record['sign'] = this.option2Selected;
+    record['planet'] = this.option1Selected.trim();
+    record['sign'] = this.option2Selected.trim();
     record['value'] = this.value;
     this.dbService.update_Item(this.idToEditorDelete, record);
    

@@ -1,0 +1,134 @@
+<div class="container-fluid p-0">
+    <p-toast></p-toast>
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="name" pInputText class="p-inputtext-sm">
+            பெயர்
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="dob" pInputText class="p-inputtext-sm">
+            தேதி
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="tob" pInputText class="p-inputtext-sm">
+            நேரம்
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p-dropdown [options]="signs" [(ngModel)]="lagnam" optionValue="value" optionLabel="name"></p-dropdown>
+            ல
+        </div>
+
+        <div class="col-md-4">
+            <p-dropdown [options]="signs" [(ngModel)]="rasi" optionValue="value" optionLabel="name"></p-dropdown>
+            ரா
+        </div>
+
+        <div class="col-md-4">
+            <p-dropdown [options]="stars" [(ngModel)]="star" optionValue="value" optionLabel="name"></p-dropdown>
+            நட்
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <button class="top20" pButton type="button" [disabled]="!name || !dob || !tob" (click)="Save_Details()" label="Save"></button>
+        </div>
+        <div class="col-md-4">
+            <button class="top20" pButton type="button" (click)="Read_Items_Where()" label="Check"></button>
+        </div>
+        <div class="col-md-4">
+            <button class="top20" pButton type="button" (click)="ClearAll()" label="Clear All"></button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 25px;">
+        <div *ngIf="lagnamSignDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{lagnam }} </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of lagnamSignDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="lagnamDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{lagnam }} லக்னம் </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of lagnamDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="rasiSignDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{rasi }} </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of rasiSignDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 25px;">
+        <div *ngIf="rasiDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{rasi }} ராசி </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of rasiDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="starGenDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{star }} </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of starGenDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="starMoonDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+            <div class="card flex-fill w-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{star }} </h5>
+                </div>
+                <div class="card-body d-flex w-100">
+                    <div class="align-self-center chart chart-lg tile">
+                        <p-chip label="{{data}}" *ngFor="let data of starMoonDetails">
+                        </p-chip>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

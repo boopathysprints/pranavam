@@ -12,6 +12,10 @@ export class SignashouseService {
       return this.firestore.collection('signashouse').snapshotChanges();
   }
 
+  Read_For_Lagnam(sign) {
+    return this.firestore.collection('signashouse', ref => ref.where('house', '==', 'முதலாவது').where('sign', '==', sign)).snapshotChanges();
+  }
+
   read_Items_Where(house,sign) {
     return this.firestore.collection('signashouse', ref => ref.where('house', '==', house).where('sign', '==', sign)).snapshotChanges();
 }
