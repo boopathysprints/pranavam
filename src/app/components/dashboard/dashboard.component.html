@@ -4,99 +4,153 @@
       <p-dropdown [options]="houses" [(ngModel)]="actualHouse" optionValue="value" optionLabel="name"></p-dropdown>
       வீடு
     </div>
-    
+
     <div class="col-md-6">
-      <p-dropdown [options]="signs" [(ngModel)]="actualHouseSign"  optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="signs" [(ngModel)]="actualHouseSign" optionValue="value" optionLabel="name"></p-dropdown>
       அதன் அதிபதி
     </div>
-    
+
   </div>
 
   <div class="row">
     <div class="col-md-4">
-      <p-dropdown [options]="planets" [(ngModel)]="actualHouseLord"  optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="planets" [(ngModel)]="actualHouseLord" optionValue="value" optionLabel="name"></p-dropdown>
       ஆனது
     </div>
     <div class="col-md-6">
       <p-dropdown [options]="houses" [(ngModel)]="placedHouse" optionValue="value" optionLabel="name"></p-dropdown>
-      வீடான 
+      வீடான
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-4">
-      <p-dropdown [options]="signs" [(ngModel)]="placedHouseSign"  optionValue="value" optionLabel="name"></p-dropdown>
+      <p-dropdown [options]="signs" [(ngModel)]="placedHouseSign" optionValue="value" optionLabel="name"></p-dropdown>
+      -ல்
+    </div>
+    <div class="col-md-4">
+      <p-dropdown [options]="stars" [(ngModel)]="placedStar" optionValue="value" optionLabel="name"></p-dropdown>
       -ல் உள்ளது
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-4">
-      <button class="top20" pButton type="button" (click)="read_Items_Where()" label="Check" ></button>
+      <button class="top20" pButton type="button" (click)="read_Items_Where()" label="Check"></button>
     </div>
 
     <div class="col-md-4">
-      <button class="top20" pButton type="button" (click)="ClearAll()" label="Clear All" ></button>
+      <button class="top20" pButton type="button" (click)="ClearAll()" label="Clear All"></button>
     </div>
   </div>
-  
-    <div class="row" style="margin-top: 25px;">
-      <div *ngIf="lordinhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
-        <div class="card flex-fill w-100">
-          <div class="card-header">
-            <h5 class="card-title mb-0">{{actualHouse }} அதிபதி  {{placedHouse}} வீட்டில்</h5>
-          </div>
-          <div class="card-body d-flex w-100">
-            <div class="align-self-center chart chart-lg tile">
-              <p-chip label="{{data}}"  *ngFor="let data of lordinhouseDetails" >
-              </p-chip>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div *ngIf="planetinhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
-        <div class="card flex-fill w-100">
-          <div class="card-header">
-            <h5 class="card-title mb-0">{{actualHouseLord }} -  {{placedHouse}} வீட்டில்</h5>
-          </div>
-          <div class="card-body d-flex w-100">
-            <div  class="align-self-center chart chart-lg tile">
-              <p-chip label="{{data}}"  *ngFor="let data of planetinhouseDetails" >
-              </p-chip>
-            </div>
+  <div class="row" style="margin-top: 25px;">
+    <div *ngIf="actualhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouse }} வீடு</h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of actualhouseDetails">
+            </p-chip>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row" style="margin-top: 25px;">
-      <div *ngIf="actualhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
-        <div class="card flex-fill w-100">
-          <div class="card-header">
-            <h5 class="card-title mb-0">{{actualHouse }} வீடு</h5>
-          </div>
-          <div class="card-body d-flex w-100">
-            <div class="align-self-center chart chart-lg tile">
-              <p-chip label="{{data}}"  *ngFor="let data of actualhouseDetails" >
-              </p-chip>
-            </div>
+    <div *ngIf="actualhouseSignDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouseSign }} </h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of actualhouseSignDetails">
+            </p-chip>
           </div>
         </div>
       </div>
+    </div>
 
-      <div *ngIf="placedhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
-        <div class="card flex-fill w-100">
-          <div class="card-header">
-            <h5 class="card-title mb-0">{{placedHouse}} வீடு</h5>
+    <!-- Planet-->
+
+  </div>
+
+  <div class="row" style="margin-top: 25px;">
+    <div *ngIf="placedhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{placedHouse}} வீடு</h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of placedhouseDetails">
+            </p-chip>
           </div>
-          <div class="card-body d-flex w-100">
-            <div  class="align-self-center chart chart-lg tile">
-              <p-chip label="{{data}}"  *ngFor="let data of placedhouseDetails" >
-              </p-chip>
-            </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="placedhouseSignDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{placedHouseSign }} </h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of placedhouseSignDetails">
+            </p-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="lordinhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouse }} அதிபதி {{placedHouse}} வீட்டில்</h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of lordinhouseDetails">
+            </p-chip>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row" style="margin-top: 25px;">
+    <div *ngIf="planetinhouseDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouseLord }} - {{placedHouse}} வீட்டில்</h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of planetinhouseDetails">
+            </p-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="starDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{placedStar }} </h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of starDetails">
+            </p-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Planet in star-->
+  </div>
+
+</div>

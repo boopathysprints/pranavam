@@ -3,6 +3,8 @@ import { GeneralService } from 'src/services/general.service';
 import { HouseService } from 'src/services/house.service';
 import { LordinhouseService } from 'src/services/lordinhouse.service';
 import { PlanetinhouseService } from 'src/services/planetinhouse.service';
+import { SignService } from 'src/services/sign.service';
+import { StarService } from 'src/services/star.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,44 +15,57 @@ export class DashboardComponent implements OnInit {
   houseData: any[] = [];
   signData: any[] = [];
   planetData: any[] = [];
+  starData: any[] = [];
   houses: any[] = [];
   signs: any[] = [];
+  stars: any[] = [];
   planets: any[] = [];
 
   lordinhouseData: any;
   planetinhouseData: any;
   actualhouseData: any;
   placedhouseData: any;
+  actualhouseSignData: any;
+  placedhouseSignData: any;
+  placedhouseStarData: any;
 
   lordinhouseDetails: any[] = [];
   planetinhouseDetails: any[] = [];
   actualhouseDetails: any[] = [];
   placedhouseDetails: any[] = [];
+  starDetails: any[] = [];
+  actualhouseSignDetails: any[] = [];
+  placedhouseSignDetails: any[] = [];
+  planetinstarDetails: any[] = [];
 
-  lagnam: string;
-  rasi: string;
+  
   actualHouse: string;
   actualHouseSign: string;
   actualHouseLord: string;
   placedHouse: string;
   placedHouseSign: string;
+  placedStar: string;
 
   visible: boolean = false;
 
   constructor(private generalService: GeneralService,
     private _lordinhouseService: LordinhouseService,
     private _planetinhouseService: PlanetinhouseService,
-    private _houseService: HouseService
+    private _houseService: HouseService,
+    private _signService: SignService,
+    private _starService: StarService
   ) { }
 
   ngOnInit(): void {
-    this.get_Option1_Values();
-    this.get_Option2_Values();
-    this.get_Option3_Values();
+    this.get_House_Values();
+    this.get_Sign_Values();
+    this.get_Planet_Values();
+    this.get_Star_Values();
   }
 
-  get_Option1_Values() {
-    this.houses.push({ name: '', value: '' });
+  get_House_Values() {
+    if(this.houses.length == 0)
+      this.houses.push({ name: '', value: '' });
     this.generalService.getHouseTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
@@ -61,8 +76,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  get_Option2_Values() {
-    this.signs.push({ name: '', value: '' });
+  get_Sign_Values() {
+    if(this.signs.length == 0)
+      this.signs.push({ name: '', value: '' });
     this.generalService.getSignTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
@@ -73,8 +89,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  get_Option3_Values() {
-    this.planets.push({ name: '', value: '' });
+  get_Planet_Values() {
+    if(this.planets.length == 0)
+      this.planets.push({ name: '', value: '' });
     this.generalService.getPlanetTypeInfo().subscribe(data => {
       const list = data.split('\n');
       list.forEach(e => {
@@ -85,9 +102,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  get_Star_Values() {
+    console.log(this.stars);
+    if(this.stars.length == 0)
+      this.stars.push({ name: '', value: '' });
+    this.generalService.getStarTypeInfo().subscribe(data => {
+      const list = data.split('\n');
+      list.forEach(e => {
+        this.starData.push(e);
+      });
+      var valuesArray = this.starData[0].split(',');
+      valuesArray.forEach(element => this.stars.push({ name: element, value: element }));
+    });
+  }
+
   ClearAll() {
-    this.lagnam = '';
-    this.rasi = '';
+    this.placedStar ='';
     this.actualHouse = '';
     this.actualHouseSign = '';
     this.actualHouseLord = '';
@@ -97,6 +127,9 @@ export class DashboardComponent implements OnInit {
     this.planetinhouseDetails = [];
     this.actualhouseDetails = [];
     this.placedhouseDetails = [];
+    this.actualhouseSignDetails = [];
+    this.placedhouseSignDetails = [];
+    this.starDetails=[];
   }
 
   ClearChips() {
@@ -104,6 +137,9 @@ export class DashboardComponent implements OnInit {
     this.planetinhouseDetails = [];
     this.actualhouseDetails = [];
     this.placedhouseDetails = [];
+    this.actualhouseSignDetails = [];
+    this.placedhouseSignDetails = [];
+    this.starDetails=[];
   }
 
   read_Items_Where() {
@@ -111,6 +147,36 @@ export class DashboardComponent implements OnInit {
     if (this.actualHouse != undefined && this.actualHouse != '') {
       this._houseService.read_Items_Where(this.actualHouse).subscribe(data => {
         this.actualhouseData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
+    if (this.actualHouseSign != undefined && this.actualHouseSign != '') {
+      this._signService.read_Items_Where(this.actualHouseSign).subscribe(data => {
+        this.actualhouseSignData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
+    if (this.placedHouseSign != undefined && this.placedHouseSign != '' && this.actualHouseSign != this.placedHouseSign) {
+      this._signService.read_Items_Where(this.placedHouseSign).subscribe(data => {
+        this.placedhouseSignData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
+    if (this.placedStar != undefined && this.placedStar != '') {
+      this._starService.read_Items_Where(this.placedStar).subscribe(data => {
+        this.starData = data.map(e => {
           return {
             value: e.payload.doc.data()['value']
           };
@@ -160,6 +226,37 @@ export class DashboardComponent implements OnInit {
       }
       );
     }
+
+    if (this.actualHouseSign != undefined && this.actualHouseSign != '') {
+      this.actualhouseSignDetails = [];
+      this.actualhouseSignData.forEach(element => {
+        if (this.actualhouseSignDetails.indexOf(element.value) === -1) {
+          this.actualhouseSignDetails.push(element.value)
+        }
+      }
+      );
+    }
+
+    if (this.placedHouseSign != undefined && this.placedHouseSign != '' && this.actualHouseSign != this.placedHouseSign) {
+      this.placedhouseSignDetails = [];
+      this.placedhouseSignData.forEach(element => {
+        if (this.placedhouseSignDetails.indexOf(element.value) === -1) {
+          this.placedhouseSignDetails.push(element.value)
+        }
+      }
+      );
+    }
+
+    if (this.starData != undefined && this.starData.length >0) {
+      this.starDetails = [];
+      this.starData.forEach(element => {
+        if (this.starDetails.indexOf(element.value) === -1) {
+          this.starDetails.push(element.value)
+        }
+      }
+      );
+    }
+
     if (this.placedHouse != undefined && this.placedHouse != '' && this.actualHouse != this.placedHouse) {
       this.placedhouseDetails = [];
       this.placedhouseData.forEach(element => {
