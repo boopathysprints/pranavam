@@ -73,6 +73,20 @@
       </div>
     </div>
 
+    <div *ngIf="actualhouseLordDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouseLord }} </h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of actualhouseLordDetails">
+            </p-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Planet-->
 
   </div>
@@ -150,7 +164,19 @@
       </div>
     </div>
 
-    <!-- Planet in star-->
+    <div *ngIf="planetinstarDetails.length > 0" class="col-12 col-lg-4 col-xxl-3 d-flex">
+      <div class="card flex-fill w-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{actualHouseLord }} - {{placedStar }} -ல் </h5>
+        </div>
+        <div class="card-body d-flex w-100">
+          <div class="align-self-center chart chart-lg tile">
+            <p-chip label="{{data}}" *ngFor="let data of planetinstarDetails">
+            </p-chip>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

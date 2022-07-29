@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GeneralService } from 'src/services/general.service';
 import { HouseService } from 'src/services/house.service';
 import { LordinhouseService } from 'src/services/lordinhouse.service';
+import { PlanetService } from 'src/services/planet.service';
 import { PlanetinhouseService } from 'src/services/planetinhouse.service';
+import { PlanetinstarService } from 'src/services/planetinstar.service';
 import { SignService } from 'src/services/sign.service';
 import { StarService } from 'src/services/star.service';
 
@@ -23,15 +25,19 @@ export class DashboardComponent implements OnInit {
 
   lordinhouseData: any;
   planetinhouseData: any;
+  planetinstarData: any;
   actualhouseData: any;
   placedhouseData: any;
   actualhouseSignData: any;
+  actualhouseLordData: any;
   placedhouseSignData: any;
   placedhouseStarData: any;
 
   lordinhouseDetails: any[] = [];
   planetinhouseDetails: any[] = [];
+  planetinsstarDetails: any[] = [];
   actualhouseDetails: any[] = [];
+  actualhouseLordDetails: any[] = [];
   placedhouseDetails: any[] = [];
   starDetails: any[] = [];
   actualhouseSignDetails: any[] = [];
@@ -53,7 +59,9 @@ export class DashboardComponent implements OnInit {
     private _planetinhouseService: PlanetinhouseService,
     private _houseService: HouseService,
     private _signService: SignService,
-    private _starService: StarService
+    private _planetinstarService: PlanetinstarService,
+    private _starService: StarService,
+    private _planetService:PlanetService
   ) { }
 
   ngOnInit(): void {
@@ -103,7 +111,6 @@ export class DashboardComponent implements OnInit {
   }
 
   get_Star_Values() {
-    console.log(this.stars);
     if(this.stars.length == 0)
       this.stars.push({ name: '', value: '' });
     this.generalService.getStarTypeInfo().subscribe(data => {
@@ -154,6 +161,16 @@ export class DashboardComponent implements OnInit {
       });
     }
 
+    if (this.actualHouseLord != undefined && this.actualHouseLord != '') {
+      this._planetService.read_Items_Where(this.actualHouseLord).subscribe(data => {
+        this.actualhouseLordData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+    }
+
     if (this.actualHouseSign != undefined && this.actualHouseSign != '') {
       this._signService.read_Items_Where(this.actualHouseSign).subscribe(data => {
         this.actualhouseSignData = data.map(e => {
@@ -177,6 +194,15 @@ export class DashboardComponent implements OnInit {
     if (this.placedStar != undefined && this.placedStar != '') {
       this._starService.read_Items_Where(this.placedStar).subscribe(data => {
         this.starData = data.map(e => {
+          return {
+            value: e.payload.doc.data()['value']
+          };
+        })
+      });
+
+      this._planetinstarService.Read_For_Placement(this.actualHouseLord.trim(),this.placedStar).subscribe(data => {
+       console.log(data)
+        this.planetinstarData = data.map(e => {
           return {
             value: e.payload.doc.data()['value']
           };
@@ -213,6 +239,9 @@ export class DashboardComponent implements OnInit {
         })
       });
     }
+
+   
+
     setTimeout(() => this.update_Values(), 2000);
   }
 
@@ -237,6 +266,16 @@ export class DashboardComponent implements OnInit {
       );
     }
 
+    if (this.actualhouseLordData.length >0) {
+      this.actualhouseLordDetails = [];
+      this.actualhouseLordData.forEach(element => {
+        if (this.actualhouseLordDetails.indexOf(element.value) === -1) {
+          this.actualhouseLordDetails.push(element.value)
+        }
+      }
+      );
+    }
+
     if (this.placedHouseSign != undefined && this.placedHouseSign != '' && this.actualHouseSign != this.placedHouseSign) {
       this.placedhouseSignDetails = [];
       this.placedhouseSignData.forEach(element => {
@@ -252,6 +291,16 @@ export class DashboardComponent implements OnInit {
       this.starData.forEach(element => {
         if (this.starDetails.indexOf(element.value) === -1) {
           this.starDetails.push(element.value)
+        }
+      }
+      );
+    }
+
+    if (this.planetinstarData != undefined && this.planetinstarData.length >0) {
+      this.planetinstarDetails = [];
+      this.planetinstarData.forEach(element => {
+        if (this.planetinstarDetails.indexOf(element.value) === -1) {
+          this.planetinstarDetails.push(element.value)
         }
       }
       );

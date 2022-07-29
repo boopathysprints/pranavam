@@ -8,8 +8,12 @@ export class PlanetinstarService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  Read_For_Natchathiram(house) {
-    return this.firestore.collection('planetinstar', ref => ref.where('planet', '==', 'சந்திரன்').where('star', '==', house)).snapshotChanges();
+  Read_For_Natchathiram(star) {
+    return this.firestore.collection('planetinstar', ref => ref.where('planet', '==', 'சந்திரன்').where('star', '==', star)).snapshotChanges();
+  }
+
+  Read_For_Placement(planet,star) {
+    return this.firestore.collection('planetinstar', ref => ref.where('planet', '==', planet).where('star', '==', star)).snapshotChanges();
   }
 
   read_All_Items() {

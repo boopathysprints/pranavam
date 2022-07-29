@@ -8,6 +8,10 @@ export class PlanetService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  read_Items_Where(planet) {
+    return this.firestore.collection('planetss', ref => ref.where('planet', '==', planet)).snapshotChanges();
+  }
+
   read_All_Planets() {
       return this.firestore.collection('planetss').snapshotChanges();
   }
