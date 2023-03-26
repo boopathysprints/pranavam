@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="row" style="margin-top: 25px;">
+        <div class="col-md-12">
+            <textarea pInputTextarea [(ngModel)]="planet"></textarea>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 25px;">
+        <div class="col-md-3">
+            <button type="button" (click)="addtochart()" class="btn btn-primary">+
+                Add</button>
+        </div>
+    </div>
+
+
+</div>
+<div class="grid" style="margin-top: 25px;">
+    <div class="box empty_box"></div>
+    <div class="box pisces_outer"></div>
+    <div class="box aries_outer"></div>
+    <div class="box tarus_outer"></div>
+    <div class="box gemini_outer"></div>
+    <div class="box empty_box"></div>
+    <div class="box empty_box"></div>
+    <div id="pisces_inner" class="box pisces_inner">
+        {{pisces_inner}}
+    </div>
+    <div id="aries_inner"  class="box aries_inner">
+        {{aries_inner}}
+    </div>
+    <div id="tarus_inner" class="box tarus_inner"></div>
+    <div id="gemini_inner" class="box gemini_inner">
+        {{gemini_inner}}
+    </div>
+    <div class="box empty_box"></div>
+    <div class="box aquarius_outer"></div>
+    <div id="aquarius_inner" class="box aquarius_inner">
+        {{aquarius_inner}}
+    </div>
+    <div class="box empty_box"></div>
+    <div class="box empty_box"></div>
+    <div id="cancer_inner" class="box cancer_inner">
+        {{cancer_inner}}
+    </div>
+    <div class="box cancer_outer"></div>
+    <div class="box capricon_outer"></div>
+    <div id="capricon_inner" class="box capricon_inner">
+        {{capricon_inner}}
+    </div>
+    <div class="box empty_box"></div>
+    <div class="box empty_box"></div>
+    <div id="leo_inner" class="box leo_inner">
+        {{leo_inner}}
+    </div>
+    <div class="box leo_outer"></div>
+    <div class="box empty_box"></div>
+    <div id="sagittarius_inner" class="box sagittarius_inner">
+        {{sagittarius_inner}}
+    </div>
+    <div id="scorpion_inner" class="box scorpion_inner">
+        {{scorpion_inner}}
+    </div>
+    <div id="libra_inner" class="box libra_inner">
+        {{libra_inner}}
+    </div>
+    <div id="virgo_inner" class="box virgo_inner">
+        {{virgo_inner}}
+    </div>
+    <div class="box empty_box"></div>
+    <div class="box empty_box"></div>
+    <div class="box sagittarius_outer"></div>
+    <div class="box scorpion_outer"></div>
+    <div class="box libra_outer"></div>
+    <div class="box virgo_outer"></div>
+    <div class="box empty_box"></div>
+</div>
+
+<div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-4">
+        <p-dropdown [options]="houseorder" (onChange)="checkAstro($event.value)" optionValue="value" optionLabel="name"></p-dropdown>
+        வீடு
+      </div>
+    </div>
+  
+  </div>
+
+<app-dashboard [planetpositions]="planetpositions"></app-dashboard>

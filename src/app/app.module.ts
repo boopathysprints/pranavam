@@ -47,6 +47,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { UploadbulkComponent } from './uploadbulk/uploadbulk.component';
 import { SignashouseComponent } from './components/signashouse/signashouse.component';
 import { BasicsComponent } from './components/basics/basics.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { BasicsComponent } from './components/basics/basics.component';
     LorninsignComponent,
     UploadbulkComponent,
     SignashouseComponent,
-    BasicsComponent
+    BasicsComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,71 @@
+.pisces_outer,
+.aries_outer,
+.tarus_outer,
+.gemini_outer,
+.pisces_inner,
+.aries_inner,
+.tarus_inner,
+.gemini_inner,
+.aquarius_outer,
+.aquarius_inner,
+.cancer_inner,
+.cancer_outer,
+.capricon_outer,
+.capricon_inner,
+.leo_inner,
+.leo_outer,
+.sagittarius_inner,
+.scorpion_inner,
+.libra_inner,
+.virgo_inner,
+.sagittarius_outer,
+.scorpion_outer,
+.libra_outer,
+.virgo_outer {
+    background-color: #ffffff;
+    border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
+    height: 80px;
+    border: 1px solid #000;
+
+}
+
+.empty_box {
+    border: none;
+    background-color: #f5f7fb;
+}
+
+.box {
+    margin: 2px;
+}
+
+.aries_outer,
+.tarus_outer,
+.gemini_outer,
+.pisces_outer,
+.cancer_outer,
+.leo_outer,
+.aquarius_outer,
+.capricon_outer,
+.sagittarius_outer,
+.scorpion_outer,
+.libra_outer,
+.virgo_outer {
+    background-color: #EDEDED;
+}
+
+.grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.grid>div {
+    flex-basis: calc(16.66% - 10px);
+}
+
+.chart_input {
+    width: 100% !important;
+    min-height: 100% !important;
+}

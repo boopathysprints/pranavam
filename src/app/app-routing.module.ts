@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/services/auth.guard';
 import { BasicsComponent } from './components/basics/basics.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HouseComponent } from './components/house/house.component';
 import { LordinhouseComponent } from './components/lordinhouse/lordinhouse.component';
@@ -23,7 +24,7 @@ const routes: Routes = [];
   imports: [RouterModule.forRoot([
     {path: 'pranavam', component: MainComponent, canActivate : [AuthGuard], 
     children:[
-      {path: 'basic', component: BasicsComponent, canActivate : [AuthGuard]},
+      {path: 'basic', component: ChartComponent, canActivate : [AuthGuard]},
       {path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard]},
       {path: 'star', component: StarComponent, canActivate : [AuthGuard]},
       {path: 'sign', component: SignComponent, canActivate : [AuthGuard]},
